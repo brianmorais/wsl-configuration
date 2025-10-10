@@ -2,6 +2,20 @@
 
 Este guia explica como **remover instalações antigas do WSL**, configurar um ambiente novo, instalar o **pyenv** e usar o **VSCode** de forma otimizada dentro do Linux.
 
+  ## 📋 Sumário
+
+  0. [🧹 Remover instalação antiga do WSL](#-0-opcional-remover-instalação-antiga-do-wsl)
+  1. [🧩 Habilitar recursos do Windows](#-1-habilitar-os-recursos-necessários-do-windows)
+  2. [🐧 Instalar e configurar o WSL](#-2-instalar-e-configurar-o-wsl)
+  3. [🧱 Acessar o terminal Linux](#-3-acessar-o-terminal-linux)
+  4. [🐍 Instalar e configurar o Pyenv](#-4-instalar-o-pyenv-no-wsl-ubuntu)
+  5. [💻 Usar o VSCode com o WSL](#-5-usando-o-vscode-com-o-wsl)
+  6. [⚡ Boas práticas](#-6-boas-práticas-no-wsl)
+  7. [🧰 Configuração do Git](#-7-configuração-do-git)
+  8. [🗝️ Configuração de SSH](#-8-configuração-de-ssh)
+  9. [🐳 (Opcional) Instalar Docker Engine no WSL](#-9-opcional-instalação-do-docker-engine-no-wsl)
+  10. [🟩 (Opcional) Instalar e configurar o NVM](#-10-opcional-instalação-e-configuração-do-nvm-node-version-manager)
+
 ---
 
 ## 🧹 0. (Opcional) Remover instalação antiga do WSL
