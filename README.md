@@ -4,7 +4,7 @@ Este guia explica como **remover instalações antigas do WSL**, configurar um a
 
 ## 📋 Sumário
 
-0. [🧹 Remover instalação antiga do WSL](#-0-opcional-remover-instalação-antiga-do-wsl)
+0. [🧹 (Opcional) Remover instalação antiga do WSL](#-0-opcional-remover-instalação-antiga-do-wsl)
 1. [🧩 Habilitar recursos do Windows](#-1-habilitar-os-recursos-necessários-do-windows)
 2. [🐧 Instalar e configurar o WSL](#-2-instalar-e-configurar-o-wsl)
 3. [🧱 Acessar o terminal Linux](#-3-acessar-o-terminal-linux)
