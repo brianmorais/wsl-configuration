@@ -299,3 +299,172 @@ Para evitar conflitos com a nova chave SSH ou tokens:
 4. Reinicie o **VSCode** ou terminal **WSL** antes de usar o Git novamente
 
 > Ao usar Git novamente, você poderá gerar ou autenticar com a nova chave SSH sem problemas.
+
+---
+
+## 🐳 9. (Opcional) Instalação do Docker Engine no WSL
+
+O **Docker Engine** permite executar containers Linux diretamente dentro do WSL, sem precisar do Docker Desktop.
+Essa instalação é ideal para quem quer um ambiente 100% Linux, leve e isolado.
+
+---
+
+### 9.1 — Atualizar pacotes e instalar dependências
+
+```bash
+sudo apt update
+sudo apt install ca-certificates curl gnupg lsb-release -y
+```
+
+---
+
+### 9.2 — Adicionar chave GPG oficial do Docker
+
+```bash
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+```
+
+---
+
+### 9.3 — Adicionar o repositório do Docker
+
+```bash
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
+  https://download.docker.com/linux/ubuntu \
+  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
+
+---
+
+### 9.4 — Instalar o Docker Engine
+
+```bash
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+```
+
+---
+
+### 9.5 — Adicionar seu usuário ao grupo `docker`
+
+```bash
+sudo usermod -aG docker $USER
+```
+
+Recarregue o shell:
+
+```bash
+exec "$SHELL"
+```
+
+---
+
+### 9.6 — Testar a instalação
+
+```bash
+docker version
+docker run hello-world
+```
+
+Se o comando acima exibir a mensagem “Hello from Docker!”, a instalação foi concluída com sucesso. 🚀
+
+---
+
+## 🟩 10. (Opcional) Instalação e configuração do NVM (Node Version Manager)
+
+O **NVM** permite instalar e gerenciar múltiplas versões do **Node.js** dentro do WSL, sem interferir no sistema.
+Ideal para desenvolvimento com **Node**, **React**, **Next.js**, **NestJS**, entre outros frameworks.
+
+---
+
+### 10.1 — Atualizar pacotes
+
+```bash
+sudo apt update && sudo apt upgrade -y
+```
+
+---
+
+### 10.2 — Instalar o NVM
+
+Baixe e execute o script oficial de instalação:
+
+```bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+```
+
+> 🔸 **Dica:** sempre use a versão estável mais recente do repositório oficial
+> 👉 [https://github.com/nvm-sh/nvm](https://github.com/nvm-sh/nvm)
+
+---
+
+### 10.3 — Ativar o NVM no shell
+
+Adicione as seguintes linhas ao final do seu `~/.bashrc` (se o instalador ainda não adicionou automaticamente):
+
+```bash
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+```
+
+Recarregue o shell:
+
+```bash
+exec "$SHELL"
+```
+
+---
+
+### 10.4 — Verificar instalação
+
+```bash
+nvm --version
+```
+
+Se aparecer o número da versão, o NVM foi instalado corretamente ✅
+
+---
+
+### 10.5 — Instalar uma versão específica do Node.js
+
+Exemplo: instalar a versão LTS atual
+
+```bash
+nvm install --lts
+```
+
+Definir como padrão:
+
+```bash
+nvm alias default lts/*
+```
+
+Verificar:
+
+```bash
+node -v
+npm -v
+```
+
+---
+
+### 10.6 — Usar múltiplas versões
+
+Você pode alternar entre versões facilmente:
+
+```bash
+nvm install 20
+nvm install 18
+nvm use 18
+```
+
+> Isso é útil quando diferentes projetos exigem versões diferentes do Node.js.
+
+---
+
+### ⚙️ 10.7 — Boas práticas
+
+* Sempre use `nvm install` em vez de `sudo apt install nodejs`
+* Evite instalar Node.js globalmente no sistema
