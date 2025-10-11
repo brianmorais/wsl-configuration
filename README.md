@@ -212,11 +212,11 @@ python --version
 
 ---
 
-### 5.1 — Instalar a extensão “Remote - WSL”
+### 5.1 — Instalar a extensão “WSL”
 
 1. Abra o VSCode
 2. Vá em `Extensões (Ctrl+Shift+X)`
-3. Busque: **Remote - WSL**
+3. Busque: **WSL**
 4. Instale a extensão oficial da Microsoft
 
 ---
@@ -228,6 +228,13 @@ No terminal do WSL:
 ```bash
 cd ~/projects/meu-projeto
 code .
+```
+
+Ou
+
+```bash
+cd ~/projects
+code meu-projeto
 ```
 
 ---
