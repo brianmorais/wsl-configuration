@@ -412,7 +412,7 @@ sudo apt update && sudo apt upgrade -y
 Baixe e execute o script oficial de instalação:
 
 ```bash
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 ```
 
 > 🔸 **Dica:** sempre use a versão estável mais recente do repositório oficial
