@@ -205,7 +205,7 @@ python --version
 > ⚠️ **Importante:** Para máximo desempenho, mantenha **todos os projetos dentro do Linux**, por exemplo:
 >
 > ```
-> /home/<user>/<projects_folder>/
+> /home/<user>/<projects-folder>/
 > ```
 >
 > O acesso a arquivos pelo Windows (`/mnt/c/...`) é **muito mais lento**, pois ocorre via rede.
@@ -243,11 +243,10 @@ code meu-projeto
 
 | Ação                                   | Local recomendado                |
 | -------------------------------------- | -------------------------------- |
-| Clonar repositórios                    | `/home/<user>/<projects_folder>/...` |
+| Clonar repositórios                    | `/home/<user>/<projects-folder>/...` |
 | Instalar dependências Python           | Dentro do WSL                    |
 | Rodar containers Docker/Podman         | Dentro do WSL                    |
 | Evitar caminhos do tipo `C:\Users\...` | ❌ Desempenho ruim                |
-| Fazer backup de código                 | Via Git, não manualmente do VHDX |
 
 ---
 
