@@ -422,7 +422,7 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 
 ### 10.3 — Ativar o NVM no shell
 
-Adicione as seguintes linhas ao final do seu `~/.bashrc` (se o instalador ainda não adicionou automaticamente):
+Adicione as seguintes linhas ao final do seu `~/.bashrc` (ou `~/.zshrc`, se usar Zsh), caso o instalador ainda não as tenha adicionado automaticamente:
 
 ```bash
 export NVM_DIR="$HOME/.nvm"
