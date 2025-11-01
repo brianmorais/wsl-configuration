@@ -1,6 +1,6 @@
 # 🐧 Guia Completo: Instalação e uso do WSL no Windows
 
-Este guia explica como **remover instalações antigas do WSL**, configurar um ambiente novo, instalar o **pyenv** e usar o **VSCode** de forma otimizada dentro do Linux.
+Este guia explica como **remover instalações antigas do WSL**, configurar um ambiente novo, instalar e gerenciar ferramentas como **pyenv**, **Docker**, **NVM** e usar o **VSCode** de forma otimizada dentro do Linux, além de trazer dicas de boas práticas, configuração de Git, SSH e ajustes de rede para ambientes com VPN.
 
 ## 📋 Sumário
 
