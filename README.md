@@ -1,4 +1,4 @@
-# 🐧 Guia Completo: Instalação e Uso do WSL no Windows
+# 🐧 Guia Completo: Instalação e uso do WSL no Windows
 
 Este guia explica como **remover instalações antigas do WSL**, configurar um ambiente novo, instalar o **pyenv** e usar o **VSCode** de forma otimizada dentro do Linux.
 
