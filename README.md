@@ -15,7 +15,7 @@ Este guia explica como **remover instalações antigas do WSL**, configurar um a
 8. [🗝️ Configuração de SSH](#️-8-configuração-de-ssh)
 9. [🐳 (Opcional) Instalar Docker Engine no WSL](#-9-opcional-instalação-do-docker-engine-no-wsl)
 10. [🟩 (Opcional) Instalar e configurar o NVM](#-10-opcional-instalação-e-configuração-do-nvm-node-version-manager)
-11. [🌐 (Opcional) Definir IP Público no WSL para Evitar Problemas com VPN](#-11-opcional-definir-ip-público-no-wsl-para-evitar-problemas-com-vpn)
+11. [🌐 (Opcional) Definir IP público no WSL para evitar problemas com VPN](#-11-opcional-definir-ip-público-no-wsl-para-evitar-problemas-com-vpn)
 
 ---
 
@@ -491,7 +491,7 @@ nvm use 18
 
 ---
 
-## 🌐 11. (Opcional) Definir IP Público no WSL para Evitar Problemas com VPN
+## 🌐 11. (Opcional) Definir IP público no WSL para evitar problemas com VPN
 
 Ao usar VPNs no Windows, o WSL pode perder acesso à internet ou apresentar lentidão devido à resolução de DNS. Para forçar o uso de um DNS público (como o Google DNS), siga os passos abaixo.
 
