@@ -15,6 +15,7 @@ Este guia explica como **remover instalações antigas do WSL**, configurar um a
 8. [🗝️ Configuração de SSH](#️-8-configuração-de-ssh)
 9. [🐳 (Opcional) Instalar Docker Engine no WSL](#-9-opcional-instalação-do-docker-engine-no-wsl)
 10. [🟩 (Opcional) Instalar e configurar o NVM](#-10-opcional-instalação-e-configuração-do-nvm-node-version-manager)
+11. [🌐 (Opcional) Definir IP Público no WSL para Evitar Problemas com VPN](#-11-opcional-definir-ip-público-no-wsl-para-evitar-problemas-com-vpn)
 
 ---
 
@@ -353,7 +354,6 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o 
 echo \
   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
   https://download.docker.com/linux/ubuntu \
-  $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
 ```
 
 ---
@@ -488,3 +488,48 @@ nvm use 18
 
 * Sempre use `nvm install` em vez de `sudo apt install nodejs`
 * Evite instalar Node.js globalmente no sistema
+
+---
+
+## 🌐 11. (Opcional) Definir IP Público no WSL para Evitar Problemas com VPN
+
+Ao usar VPNs no Windows, o WSL pode perder acesso à internet ou apresentar lentidão devido à resolução de DNS. Para forçar o uso de um DNS público (como o Google DNS), siga os passos abaixo.
+
+### 11.1 — Aplicar configuração de DNS fixo
+
+Execute o comando abaixo no terminal do WSL para configurar o DNS manualmente e evitar conflitos com VPN:
+
+```bash
+sudo bash -c '
+if grep -q "^\[network\]" /etc/wsl.conf 2>/dev/null; then
+    if grep -q "^generateResolvConf" /etc/wsl.conf; then
+        sed -i "s/^generateResolvConf.*/generateResolvConf = false/" /etc/wsl.conf
+    else
+        sed -i "/^\[network\]/a generateResolvConf = false" /etc/wsl.conf
+    fi
+else
+    echo -e "\n[network]\ngenerateResolvConf = false" >> /etc/wsl.conf
+fi
+
+rm -f /etc/resolv.conf
+cat > /etc/resolv.conf <<EOF
+nameserver 8.8.8.8
+EOF
+'
+```
+
+Esse script faz o seguinte:
+- Garante que a opção `generateResolvConf = false` esteja em `/etc/wsl.conf`
+- Remove o arquivo `/etc/resolv.conf` e cria um novo apontando para o DNS público `8.8.8.8`
+
+### 11.2 — Reiniciar o WSL
+
+Após rodar o comando acima, reinicie o WSL para aplicar as alterações com o comando no Powershell:
+
+```powershell
+wsl --shutdown
+```
+
+Depois, abra novamente o terminal WSL.
+
+> **Observação:** Se precisar de outro DNS, basta trocar o IP no comando acima.
