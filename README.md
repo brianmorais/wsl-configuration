@@ -292,7 +292,7 @@ Isso permite salvar tokens de acesso do GitHub, Azure DevOps, Bitbucket etc., de
 
 > Importante: é necessário ter o Git instalado no Windows, pois o Git Credential Manager (GCM) já vem integrado nele e é compatível com o WSL.
 
-#### Passo 1 — Instalar o pacote auxiliar
+#### Passo 1 — Definir a configuração global
 
 ```bash
 git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager.exe"
