@@ -1,6 +1,6 @@
 # 🐧 Guia Completo: Instalação e uso do WSL no Windows
 
-Este guia explica como **remover instalações antigas do WSL**, configurar um ambiente novo, instalar e gerenciar ferramentas como **pyenv**, **Docker**, **NVM** e usar o **VSCode** de forma otimizada dentro do Linux, além de trazer dicas de boas práticas, configuração de Git e SSH.
+Este guia explica como **remover instalações antigas do WSL**, configurar um ambiente novo, instalar e gerenciar ferramentas como **pyenv**, **Docker**, **NVM**, **Kubernetes (Minikube, kubectl e K9s)** e usar o **VSCode** de forma otimizada dentro do Linux, além de trazer dicas de boas práticas, configuração de Git e SSH.
 
 ## 📋 Sumário
 
@@ -15,6 +15,7 @@ Este guia explica como **remover instalações antigas do WSL**, configurar um a
 8. [🗝️ Configuração de SSH](#️-8-configuração-de-ssh)
 9. [🐳 (Opcional) Instalar Docker Engine no WSL](#-9-opcional-instalação-do-docker-engine-no-wsl)
 10. [🟩 (Opcional) Instalar e configurar o NVM](#-10-opcional-instalação-e-configuração-do-nvm-node-version-manager)
+11. [☸️ (Opcional) Instalação do Minikube, kubectl e k9s](#️-11-opcional-instalação-do-minikube-kubectl-e-k9s)
 
 ---
 
@@ -492,3 +493,99 @@ nvm use 18
 
 * Sempre use `nvm install` em vez de `sudo apt install nodejs`
 * Evite instalar Node.js globalmente no sistema
+
+---
+
+## ☸️ 11. (Opcional) Instalação do Minikube, Kubectl e k9s
+
+O **Minikube** permite executar clusters Kubernetes localmente para desenvolvimento e testes.
+O **kubectl** é o cliente de linha de comando para interagir com clusters Kubernetes.
+O **K9s** é uma interface de terminal interativa para gerenciar clusters Kubernetes de forma visual e eficiente.
+
+---
+
+### 11.1 — Atualizar pacotes
+
+```bash
+sudo apt update && sudo apt upgrade -y
+```
+
+---
+
+### 11.2 — Instalar o Minikube
+
+Baixe a versão mais recente do Minikube para Linux:
+
+```bash
+curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
+```
+
+Instale o binário no diretório do sistema:
+
+```bash
+sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
+```
+
+---
+
+### 11.3 — Instalar o kubectl
+
+Baixe a versão mais recente do kubectl:
+
+```bash
+curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+```
+
+Instale o binário no diretório do sistema:
+
+```bash
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl && rm kubectl
+```
+
+---
+
+### 11.4 — Instalar o K9s
+
+Baixe o executável compactado:
+
+> 🔸 **Nota:** Substitua `v0.50.18` pela versão desejada. Verifique as versões disponíveis em [https://github.com/derailed/k9s/releases](https://github.com/derailed/k9s/releases)
+
+```bash
+wget https://github.com/derailed/k9s/releases/download/v0.50.18/k9s_Linux_amd64.tar.gz -O /tmp/k9s.tar.gz
+```
+
+Extraia o executável:
+
+```bash
+tar -zxvf /tmp/k9s.tar.gz --directory /tmp/
+```
+
+Dê permissão de execução:
+
+```bash
+chmod +x /tmp/k9s
+```
+
+Mova o executável para o PATH do sistema:
+
+```bash
+sudo mv /tmp/k9s /usr/local/bin/k9s
+```
+
+Remova o arquivo temporário:
+
+```bash
+rm /tmp/k9s.tar.gz
+```
+
+---
+
+### 11.5 — Verificar instalação
+
+```bash
+minikube version
+kubectl version --client
+k9s version
+```
+
+Se os comandos acima exibirem as versões instaladas, a instalação foi concluída com sucesso ✅
