@@ -231,12 +231,12 @@ Para evitar conflitos com a nova chave SSH ou tokens:
 
 ## ⚡ 6. Boas práticas no WSL
 
-| Ação                                                       | Local recomendado                    |
-| -----------------------------------------------------------|--------------------------------------|
-| Clonar repositórios                                        | `/home/<user>/<projects-folder>/...` |
-| Instalar dependências Python ou de qualuer outra linguagem | Dentro do WSL                        |
-| Rodar containers Docker/Podman                             | Dentro do WSL                        |
-| Evitar caminhos do tipo `C:\Users\...`                     | ❌ Desempenho ruim                   |
+| Ação                                                        | Local recomendado                    |
+| ------------------------------------------------------------|--------------------------------------|
+| Clonar repositórios                                         | `/home/<user>/<projects-folder>/...` |
+| Instalar dependências Python ou de qualquer outra linguagem | Dentro do WSL                        |
+| Rodar containers Docker/Podman                              | Dentro do WSL                        |
+| Evitar caminhos do tipo `C:\Users\...`                      | ❌ Desempenho ruim                   |
 
 ---
 
