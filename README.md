@@ -7,16 +7,16 @@ Este guia explica como **remover instalações antigas do WSL**, configurar um a
 > ⚠️ **Atenção:** A instalação e configuração base do WSL é finalizada no passo 7, os demais passos são opcionais de acordo com a necessidade do usuário.
 
 0. [🧹 Remover instalação antiga do WSL se necessário](#-0-remover-instalação-antiga-do-wsl-se-necessário)
-1. [🧩 Habilitar recursos do Windows](#-1-habilitar-os-recursos-necessários-do-windows)
+1. [🧩 Habilitar recursos necessários do Windows](#-1-habilitar-os-recursos-necessários-do-windows)
 2. [🐧 Instalar e configurar o WSL](#-2-instalar-e-configurar-o-wsl)
 3. [🧱 Acessar o terminal Linux](#-3-acessar-o-terminal-linux)
 4. [🧰 Configuração do Git](#-4-configuração-do-git)
 5. [🗝️ Configuração de SSH](#️-5-configuração-de-ssh)
 6. [⚡ Boas práticas no WSL](#-6-boas-práticas-no-wsl)
-7. [💻 Usar o VSCode com o WSL](#-7-usando-o-vscode-com-o-wsl)
-8. [🐍 Instalar o pyenv no WSL](#-8-instalar-o-pyenv-no-wsl-ubuntu)
-9. [🟩 Instalar e configurar o NVM](#-9-instalação-e-configuração-do-nvm-node-version-manager)
-10. [🐳 Instalar Docker Engine no WSL](#-10-instalação-do-docker-engine-no-wsl)
+7. [💻 Usar o VSCode com o WSL](#-7-usar-o-vscode-com-o-wsl)
+8. [🐍 Instalação do pyenv no WSL](#-8-instalação-do-pyenv-no-wsl)
+9. [🟩 Instalação e configuração do NVM (Node Version Manager)](#-9-instalação-e-configuração-do-nvm-node-version-manager)
+10. [🐳 Instalação do Docker engine no WSL](#-10-instalação-do-docker-engine-no-wsl)
 11. [☸️ Instalação do Minikube, kubectl e k9s](#️-11-instalação-do-minikube-kubectl-e-k9s)
 
 ---
@@ -240,7 +240,7 @@ Para evitar conflitos com a nova chave SSH ou tokens:
 
 ---
 
-## 💻 7. Usando o VSCode com o WSL
+## 💻 7. Usar o VSCode com o WSL
 
 > Evitar o acesso a arquivos que estejam no Windows (`/mnt/c/...`) é **muito mais lento**, pois ocorre via rede.
 
@@ -271,7 +271,7 @@ code meu-projeto
 
 ---
 
-## 🐍 8. Instalar o pyenv no WSL (Ubuntu)
+## 🐍 8. Instalação do pyenv no WSL
 
 O pyenv permite gerenciar múltiplas versões do Python no Linux.
 
