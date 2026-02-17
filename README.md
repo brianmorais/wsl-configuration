@@ -4,22 +4,24 @@ Este guia explica como **remover instalações antigas do WSL**, configurar um a
 
 ## 📋 Sumário
 
-0. [🧹 (Opcional) Remover instalação antiga do WSL](#-0-opcional-remover-instalação-antiga-do-wsl)
+> ⚠️ **Atenção:** A instalação e configuração base do WSL é finalizada no passo 7, os demais passos são opcionais de acordo com a necessidade do usuário.
+
+0. [🧹 Remover instalação antiga do WSL se necessário](#-0-remover-instalação-antiga-do-wsl-se-necessário)
 1. [🧩 Habilitar recursos do Windows](#-1-habilitar-os-recursos-necessários-do-windows)
 2. [🐧 Instalar e configurar o WSL](#-2-instalar-e-configurar-o-wsl)
 3. [🧱 Acessar o terminal Linux](#-3-acessar-o-terminal-linux)
-4. [🐍 Instalar o pyenv no WSL](#-4-instalar-o-pyenv-no-wsl-ubuntu)
-5. [💻 Usar o VSCode com o WSL](#-5-usando-o-vscode-com-o-wsl)
+4. [🧰 Configuração do Git](#-4-configuração-do-git)
+5. [🗝️ Configuração de SSH](#️-5-configuração-de-ssh)
 6. [⚡ Boas práticas no WSL](#-6-boas-práticas-no-wsl)
-7. [🧰 Configuração do Git](#-7-configuração-do-git)
-8. [🗝️ Configuração de SSH](#️-8-configuração-de-ssh)
-9. [🐳 (Opcional) Instalar Docker Engine no WSL](#-9-opcional-instalação-do-docker-engine-no-wsl)
-10. [🟩 (Opcional) Instalar e configurar o NVM](#-10-opcional-instalação-e-configuração-do-nvm-node-version-manager)
-11. [☸️ (Opcional) Instalação do Minikube, kubectl e k9s](#️-11-opcional-instalação-do-minikube-kubectl-e-k9s)
+7. [💻 Usar o VSCode com o WSL](#-7-usando-o-vscode-com-o-wsl)
+8. [🐍 Instalar o pyenv no WSL](#-8-instalar-o-pyenv-no-wsl-ubuntu)
+9. [🟩 Instalar e configurar o NVM](#-9-instalação-e-configuração-do-nvm-node-version-manager)
+10. [🐳 Instalar Docker Engine no WSL](#-10-instalação-do-docker-engine-no-wsl)
+11. [☸️ Instalação do Minikube, kubectl e k9s](#️-11-instalação-do-minikube-kubectl-e-k9s)
 
 ---
 
-## 🧹 0. (Opcional) Remover instalação antiga do WSL
+## 🧹 0. Remover instalação antiga do WSL se necessário
 
 Antes de instalar o WSL novamente, é recomendado **remover distribuições antigas e seus discos virtuais (VHDX)**, especialmente se você quer um ambiente totalmente limpo.
 
@@ -148,72 +150,101 @@ Após a instalação:
 * Abra o aplicativo **Ubuntu** no menu Iniciar.
 * Crie seu **usuário e senha Linux**.
 
+> **Observação**: Também é possível acessar o Ubuntu pelo Windows Terminal.
+
 ---
 
-## 🐍 4. Instalar o `pyenv` no WSL (Ubuntu)
+## 🧰 4. Configuração do Git
 
-O `pyenv` permite gerenciar múltiplas versões do Python no Linux.
+Após instalar o Git (ele já vem com o Ubuntu, mas pode ser atualizado), configure suas credenciais e cache de autenticação.
 
-### 4.1 — Atualizar pacotes
+### 4.1 — Verifique se o Git está instalado
 
 ```bash
-sudo apt update && sudo apt upgrade -y
+git --version
 ```
 
-### 4.2 — Instalar dependências necessárias
+Se precisar instalar:
 
 ```bash
-sudo apt install -y make build-essential libssl-dev zlib1g-dev \
-libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
-libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev \
-liblzma-dev git
-```
-
-### 4.3 — Instalar o `pyenv`
-
-```bash
-curl https://pyenv.run | bash
-```
-
-### 4.4 — Configurar o shell
-
-Adicione as seguintes linhas ao final do arquivo `~/.bashrc`:
-
-```bash
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
-```
-
-Recarregue o shell:
-
-```bash
-exec "$SHELL"
-```
-
-### 4.5 — Instalar e definir uma versão do Python
-
-```bash
-pyenv install 3.12.7
-pyenv global 3.12.7
-python --version
+sudo apt install git -y
 ```
 
 ---
 
-## 💻 5. Usando o VSCode com o WSL
+### 4.2 — Configure o nome e e-mail globais
 
-> ⚠️ **Importante:** Para máximo desempenho, mantenha **todos os projetos dentro do Linux**, por exemplo:
->
-> ```
-> /home/<user>/<projects-folder>/
-> ```
->
-> O acesso a arquivos pelo Windows (`/mnt/c/...`) é **muito mais lento**, pois ocorre via rede.
+> Essas informações aparecem nos commits.
+
+```bash
+git config --global user.name "Seu Nome"
+git config --global user.email "seu.email@empresa.com"
+```
+
+Verifique:
+
+```bash
+git config --list
+```
 
 ---
 
-### 5.1 — Instalar a extensão “WSL”
+### 4.3 — Habilitar o Credential Manager
+
+Isso permite salvar tokens de acesso do GitHub, Azure DevOps, Bitbucket etc., de forma segura.
+
+> Importante: é necessário ter o Git instalado no Windows, pois o Git Credential Manager (GCM) já vem integrado nele e é compatível com o WSL.
+
+#### Passo 1 — Definir a configuração global
+
+```bash
+git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager.exe"
+```
+
+> ⚠️ **Atenção:** O caminho `/mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager.exe` é o padrão para a maioria das instalações do Git no Windows.  
+> Caso o comando retorne erro, verifique onde o Git está instalado no seu sistema e ajuste o caminho conforme necessário.
+
+---
+
+## 🗝️ 5. Configuração de SSH
+
+Para autenticação segura com GitHub, utilize **chaves SSH**.
+
+### 5.1 — Seguir o passo a passo oficial fornecido pela empresa
+
+> Siga exatamente as instruções fornecidas no guia para criar e registrar sua chave SSH.
+
+---
+
+### 5.2 — Remover credenciais antigas do Windows Credential Manager
+
+Para evitar conflitos com a nova chave SSH ou tokens:
+
+1. Abra **Painel de Controle → Contas de Usuário → Gerenciador de Credenciais → Credenciais do Windows**
+2. Localize entradas relacionadas ao Git e GitHub
+3. Clique em **Remover** ou **Excluir**
+4. Reinicie o **VSCode** ou terminal **WSL** antes de usar o Git novamente
+
+> Ao usar Git novamente, você poderá gerar ou autenticar com a nova chave SSH sem problemas.
+
+---
+
+## ⚡ 6. Boas práticas no WSL
+
+| Ação                                                       | Local recomendado                    |
+| -----------------------------------------------------------|--------------------------------------|
+| Clonar repositórios                                        | `/home/<user>/<projects-folder>/...` |
+| Instalar dependências Python ou de qualuer outra linguagem | Dentro do WSL                        |
+| Rodar containers Docker/Podman                             | Dentro do WSL                        |
+| Evitar caminhos do tipo `C:\Users\...`                     | ❌ Desempenho ruim                   |
+
+---
+
+## 💻 7. Usando o VSCode com o WSL
+
+> Evitar o acesso a arquivos que estejam no Windows (`/mnt/c/...`) é **muito mais lento**, pois ocorre via rede.
+
+### 7.1 — Instalar a extensão “WSL”
 
 1. Abra o VSCode
 2. Vá em `Extensões (Ctrl+Shift+X)`
@@ -222,7 +253,7 @@ python --version
 
 ---
 
-### 5.2 — Abrir projetos dentro do Linux
+### 7.2 — Abrir projetos dentro do Linux
 
 No terminal do WSL:
 
@@ -240,141 +271,39 @@ code meu-projeto
 
 ---
 
-## ⚡ 6. Boas práticas no WSL
+## 🐍 8. Instalar o pyenv no WSL (Ubuntu)
 
-| Ação                                   | Local recomendado                |
-| -------------------------------------- | -------------------------------- |
-| Clonar repositórios                    | `/home/<user>/<projects-folder>/...` |
-| Instalar dependências Python           | Dentro do WSL                    |
-| Rodar containers Docker/Podman         | Dentro do WSL                    |
-| Evitar caminhos do tipo `C:\Users\...` | ❌ Desempenho ruim                |
+O pyenv permite gerenciar múltiplas versões do Python no Linux.
 
----
-
-## 🧰 7. Configuração do Git
-
-Após instalar o Git (ele já vem com o Ubuntu, mas pode ser atualizado), configure suas credenciais e cache de autenticação.
-
-### 7.1 — Verifique se o Git está instalado
+### 8.1 — Atualizar pacotes
 
 ```bash
-git --version
+sudo apt update && sudo apt upgrade -y
 ```
 
-Se precisar instalar:
+### 8.2 — Instalar dependências necessárias
 
 ```bash
-sudo apt install git -y
+sudo apt install -y make build-essential libssl-dev zlib1g-dev \
+libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev \
+liblzma-dev git
 ```
 
----
-
-### 7.2 — Configure o nome e e-mail globais
-
-> Essas informações aparecem nos commits.
+### 8.3 — Instalar o pyenv
 
 ```bash
-git config --global user.name "Seu Nome"
-git config --global user.email "seu.email@empresa.com"
+curl https://pyenv.run | bash
 ```
 
-Verifique:
+### 8.4 — Configurar o shell
+
+Adicione as seguintes linhas ao final do arquivo `~/.bashrc`:
 
 ```bash
-git config --list
-```
-
----
-
-### 7.3 — Habilitar o Credential Manager
-
-Isso permite salvar tokens de acesso do GitHub, Azure DevOps, Bitbucket etc., de forma segura.
-
-> Importante: é necessário ter o Git instalado no Windows, pois o Git Credential Manager (GCM) já vem integrado nele e é compatível com o WSL.
-
-#### Passo 1 — Definir a configuração global
-
-```bash
-git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager.exe"
-```
-
-> ⚠️ **Atenção:** O caminho `/mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager.exe` é o padrão para a maioria das instalações do Git no Windows.  
-> Caso o comando retorne erro, verifique onde o Git está instalado no seu sistema e ajuste o caminho conforme necessário.
-
----
-
-## 🗝️ 8. Configuração de SSH
-
-Para autenticação segura com GitHub, utilize **chaves SSH**.
-
-### 8.1 — Seguir o passo a passo oficial fornecido pela empresa
-
-> Siga exatamente as instruções fornecidas no guia para criar e registrar sua chave SSH.
-
----
-
-### 8.2 — Remover credenciais antigas do Windows Credential Manager
-
-Para evitar conflitos com a nova chave SSH ou tokens:
-
-1. Abra **Painel de Controle → Contas de Usuário → Gerenciador de Credenciais → Credenciais do Windows**
-2. Localize entradas relacionadas ao Git e GitHub
-3. Clique em **Remover** ou **Excluir**
-4. Reinicie o **VSCode** ou terminal **WSL** antes de usar o Git novamente
-
-> Ao usar Git novamente, você poderá gerar ou autenticar com a nova chave SSH sem problemas.
-
----
-
-## 🐳 9. (Opcional) Instalação do Docker Engine no WSL
-
-O **Docker Engine** permite executar containers Linux diretamente dentro do WSL, sem precisar do Docker Desktop.
-Essa instalação é ideal para quem quer um ambiente 100% Linux, leve e isolado.
-
----
-
-### 9.1 — Atualizar pacotes e instalar dependências
-
-```bash
-sudo apt update
-sudo apt install ca-certificates curl gnupg lsb-release -y
-```
-
----
-
-### 9.2 — Adicionar chave GPG oficial do Docker
-
-```bash
-sudo mkdir -p /etc/apt/keyrings
-curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
-```
-
----
-
-### 9.3 — Adicionar o repositório do Docker
-
-```bash
-echo \
-  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
-  https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | \
-  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
-```
-
----
-
-### 9.4 — Instalar o Docker Engine
-
-```bash
-sudo apt update
-sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
-```
-
----
-
-### 9.5 — Adicionar seu usuário ao grupo `docker`
-
-```bash
-sudo usermod -aG docker $USER
+export PATH="$HOME/.pyenv/bin:$PATH"
+eval "$(pyenv init -)"
+eval "$(pyenv virtualenv-init -)"
 ```
 
 Recarregue o shell:
@@ -383,27 +312,24 @@ Recarregue o shell:
 exec "$SHELL"
 ```
 
----
-
-### 9.6 — Testar a instalação
+### 8.5 — Instalar e definir uma versão do Python
 
 ```bash
-docker version
-docker run hello-world
+pyenv install 3.12.7
+pyenv global 3.12.7
+python --version
 ```
-
-Se o comando acima exibir a mensagem “Hello from Docker!”, a instalação foi concluída com sucesso. 🚀
 
 ---
 
-## 🟩 10. (Opcional) Instalação e configuração do NVM (Node Version Manager)
+## 🟩 9. Instalação e configuração do NVM (Node Version Manager)
 
 O **NVM** permite instalar e gerenciar múltiplas versões do **Node.js** dentro do WSL, sem interferir no sistema.
 Ideal para desenvolvimento com **Node**, **React**, **Next.js**, **NestJS**, entre outros frameworks.
 
 ---
 
-### 10.1 — Atualizar pacotes
+### 9.1 — Atualizar pacotes
 
 ```bash
 sudo apt update && sudo apt upgrade -y
@@ -411,7 +337,7 @@ sudo apt update && sudo apt upgrade -y
 
 ---
 
-### 10.2 — Instalar o NVM
+### 9.2 — Instalar o NVM
 
 Baixe e execute o script oficial de instalação:
 
@@ -424,7 +350,7 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 
 ---
 
-### 10.3 — Ativar o NVM no shell
+### 9.3 — Ativar o NVM no shell
 
 Adicione as seguintes linhas ao final do seu `~/.bashrc`, caso o instalador ainda não as tenha adicionado automaticamente:
 
@@ -442,7 +368,7 @@ exec "$SHELL"
 
 ---
 
-### 10.4 — Verificar instalação
+### 9.4 — Verificar instalação
 
 ```bash
 nvm --version
@@ -452,7 +378,7 @@ Se aparecer o número da versão, o NVM foi instalado corretamente ✅
 
 ---
 
-### 10.5 — Instalar uma versão específica do Node.js
+### 9.5 — Instalar uma versão específica do Node.js
 
 Exemplo: instalar a versão LTS atual
 
@@ -475,7 +401,7 @@ npm -v
 
 ---
 
-### 10.6 — Usar múltiplas versões
+### 9.6 — Usar múltiplas versões
 
 Você pode alternar entre versões facilmente:
 
@@ -489,14 +415,84 @@ nvm use 18
 
 ---
 
-### ⚙️ 10.7 — Boas práticas
+### ⚙️ 9.7 — Boas práticas
 
 * Sempre use `nvm install` em vez de `sudo apt install nodejs`
 * Evite instalar Node.js globalmente no sistema
 
 ---
 
-## ☸️ 11. (Opcional) Instalação do Minikube, Kubectl e k9s
+## 🐳 10. Instalação do Docker Engine no WSL
+
+O **Docker Engine** permite executar containers Linux diretamente dentro do WSL, sem precisar do Docker Desktop.
+Essa instalação é ideal para quem quer um ambiente 100% Linux, leve e isolado.
+
+---
+
+### 10.1 — Atualizar pacotes e instalar dependências
+
+```bash
+sudo apt update
+sudo apt install ca-certificates curl gnupg lsb-release -y
+```
+
+---
+
+### 10.2 — Adicionar chave GPG oficial do Docker
+
+```bash
+sudo mkdir -p /etc/apt/keyrings
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /etc/apt/keyrings/docker.gpg
+```
+
+---
+
+### 10.3 — Adicionar o repositório do Docker
+
+```bash
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.gpg] \
+  https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+```
+
+---
+
+### 10.4 — Instalar o Docker Engine
+
+```bash
+sudo apt update
+sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+```
+
+---
+
+### 10.5 — Adicionar seu usuário ao grupo `docker`
+
+```bash
+sudo usermod -aG docker $USER
+```
+
+Recarregue o shell:
+
+```bash
+exec "$SHELL"
+```
+
+---
+
+### 10.6 — Testar a instalação
+
+```bash
+docker version
+docker run hello-world
+```
+
+Se o comando acima exibir a mensagem “Hello from Docker!”, a instalação foi concluída com sucesso. 🚀
+
+---
+
+## ☸️ 11. Instalação do Minikube, Kubectl e k9s
 
 O **Minikube** permite executar clusters Kubernetes localmente para desenvolvimento e testes.
 O **kubectl** é o cliente de linha de comando para interagir com clusters Kubernetes.
