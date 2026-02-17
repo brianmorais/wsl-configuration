@@ -14,9 +14,9 @@ Este guia explica como **remover instalações antigas do WSL**, configurar um a
 5. [🗝️ Configuração de SSH](#️-5-configuração-de-ssh)
 6. [⚡ Boas práticas no WSL](#-6-boas-práticas-no-wsl)
 7. [💻 Usar o VSCode com o WSL](#-7-usar-o-vscode-com-o-wsl)
-8. [🐍 Instalação do pyenv no WSL](#-8-instalação-do-pyenv-no-wsl)
-9. [🟩 Instalação e configuração do NVM (Node Version Manager)](#-9-instalação-e-configuração-do-nvm-node-version-manager)
-10. [🐳 Instalação do Docker engine no WSL](#-10-instalação-do-docker-engine-no-wsl)
+8. [🐍 Instalação do pyenv](#-8-instalação-do-pyenv)
+9. [🟩 Instalação do NVM](#-9-instalação-do-nvm)
+10. [🐳 Instalação do Docker engine](#-10-instalação-do-docker-engine)
 11. [☸️ Instalação do Minikube, kubectl e k9s](#️-11-instalação-do-minikube-kubectl-e-k9s)
 
 ---
@@ -271,7 +271,7 @@ code meu-projeto
 
 ---
 
-## 🐍 8. Instalação do pyenv no WSL
+## 🐍 8. Instalação do pyenv
 
 O pyenv permite gerenciar múltiplas versões do Python no Linux.
 
@@ -322,9 +322,9 @@ python --version
 
 ---
 
-## 🟩 9. Instalação e configuração do NVM (Node Version Manager)
+## 🟩 9. Instalação do NVM
 
-O **NVM** permite instalar e gerenciar múltiplas versões do **Node.js** dentro do WSL, sem interferir no sistema.
+O **NVM** **(Node Version Manager)** permite instalar e gerenciar múltiplas versões do **Node.js** dentro do WSL, sem interferir no sistema.
 Ideal para desenvolvimento com **Node**, **React**, **Next.js**, **NestJS**, entre outros frameworks.
 
 ---
@@ -422,7 +422,7 @@ nvm use 18
 
 ---
 
-## 🐳 10. Instalação do Docker Engine no WSL
+## 🐳 10. Instalação do Docker Engine
 
 O **Docker Engine** permite executar containers Linux diretamente dentro do WSL, sem precisar do Docker Desktop.
 Essa instalação é ideal para quem quer um ambiente 100% Linux, leve e isolado.
