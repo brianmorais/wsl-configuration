@@ -127,7 +127,6 @@
     - name: Status | Instalação do pyenv concluída
       ansible.builtin.debug:
         msg:
-          - "Instalação do pyenv concluída"
           - "pyenv deps changed={{ pyenv_deps.changed }}"
           - "pyenv repo changed={{ pyenv_git.changed }}"
           - "bashrc changed={{ pyenv_bashrc.changed }}"
@@ -175,7 +174,6 @@
     - name: Status | Instalação do NVM concluída
       ansible.builtin.debug:
         msg:
-          - "Instalação do NVM concluída"
           - "nvm install changed={{ nvm_install.changed }}"
           - "nvm bashrc changed={{ nvm_bashrc.changed }}"
           - "node lts changed={{ nvm_node.changed }}"
@@ -260,7 +258,6 @@
     - name: Status | Instalação do Docker concluída
       ansible.builtin.debug:
         msg:
-          - "Instalação do Docker concluída"
           - "docker deps changed={{ docker_deps.changed }}"
           - "docker repo changed={{ docker_repo.changed }}"
           - "docker install changed={{ docker_install.changed }}"
@@ -321,7 +318,6 @@
     - name: Status | Instalação de K8s tools concluída
       ansible.builtin.debug:
         msg:
-          - "Instalação de K8s tools concluída"
           - "minikube changed={{ minikube_install.changed }}"
           - "kubectl changed={{ kubectl_install.changed }}"
           - "k9s download changed={{ k9s_download.changed }}"
