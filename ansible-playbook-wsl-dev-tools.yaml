@@ -1,3 +1,4 @@
+---
 - name: Configurar ferramentas de desenvolvimento no WSL (etapas 9, 10, 11 e 12)
   hosts: localhost
   connection: local
