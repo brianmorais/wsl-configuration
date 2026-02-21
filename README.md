@@ -14,10 +14,11 @@ Este guia explica como **remover instalações antigas do WSL**, configurar um a
 5. [🗝️ Configuração de SSH](#️-5-configuração-de-ssh)
 6. [⚡ Boas práticas no WSL](#-6-boas-práticas-no-wsl)
 7. [💻 Usar o VSCode com o WSL](#-7-usar-o-vscode-com-o-wsl)
-8. [🐍 Instalação do pyenv](#-8-instalação-do-pyenv)
-9. [🟩 Instalação do NVM](#-9-instalação-do-nvm)
-10. [🐳 Instalação do Docker engine](#-10-instalação-do-docker-engine)
-11. [☸️ Instalação do Minikube, kubectl e k9s](#️-11-instalação-do-minikube-kubectl-e-k9s)
+8. [🤖 Instalação do Ansible](#-8-instalação-do-ansible)
+9. [🐍 Instalação do pyenv](#-9-instalação-do-pyenv)
+10. [🟩 Instalação do NVM](#-10-instalação-do-nvm)
+11. [🐳 Instalação do Docker engine](#-11-instalação-do-docker-engine)
+12. [☸️ Instalação do Minikube, kubectl e k9s](#️-12-instalação-do-minikube-kubectl-e-k9s)
 
 ---
 
@@ -271,9 +272,11 @@ code meu-projeto
 
 ---
 
-## 🐍 8. Instalação do pyenv
+## 🤖 8. Instalação do Ansible
 
-O pyenv permite gerenciar múltiplas versões do Python no Linux.
+O **Ansible** permite automatizar configurações e provisionamento de ambiente usando playbooks YAML.
+
+---
 
 ### 8.1 — Atualizar pacotes
 
@@ -281,7 +284,60 @@ O pyenv permite gerenciar múltiplas versões do Python no Linux.
 sudo apt update && sudo apt upgrade -y
 ```
 
-### 8.2 — Instalar dependências necessárias
+---
+
+### 8.2 — Instalar o Ansible
+
+```bash
+sudo apt install -y ansible
+```
+
+---
+
+### 8.3 — Verificar instalação
+
+```bash
+ansible --version
+```
+
+Se o comando retornar a versão instalada, o Ansible foi configurado com sucesso ✅
+
+---
+
+### 8.4 — Teste rápido local
+
+```bash
+ansible localhost -m ping -c local
+```
+
+Se retornar `pong`, o ambiente está pronto para executar playbooks.
+
+---
+
+> ⚠️ **Observação:** Se preferir, você pode usar o playbook já disponível neste repositório para executar as instalações seguintes automaticamente:
+
+```bash
+curl -fsSL -o /tmp/ansible-playbook-wsl-dev-tools.yml \
+https://raw.githubusercontent.com/brianmorais/wsl-configuration/main/ansible-playbook-wsl-dev-tools.yaml
+```
+
+```bash
+ansible-playbook -i localhost, -c local /tmp/ansible-playbook-wsl-dev-tools.yml -K
+```
+
+---
+
+## 🐍 9. Instalação do pyenv
+
+O pyenv permite gerenciar múltiplas versões do Python no Linux.
+
+### 9.1 — Atualizar pacotes
+
+```bash
+sudo apt update && sudo apt upgrade -y
+```
+
+### 9.2 — Instalar dependências necessárias
 
 ```bash
 sudo apt install -y make build-essential libssl-dev zlib1g-dev \
@@ -290,13 +346,13 @@ libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev \
 liblzma-dev git
 ```
 
-### 8.3 — Instalar o pyenv
+### 9.3 — Instalar o pyenv
 
 ```bash
 curl https://pyenv.run | bash
 ```
 
-### 8.4 — Configurar o shell
+### 9.4 — Configurar o shell
 
 Adicione as seguintes linhas ao final do arquivo `~/.bashrc`:
 
@@ -312,7 +368,7 @@ Recarregue o shell:
 exec "$SHELL"
 ```
 
-### 8.5 — Instalar e definir uma versão do Python
+### 9.5 — Instalar e definir uma versão do Python
 
 ```bash
 pyenv install 3.12.7
@@ -322,14 +378,14 @@ python --version
 
 ---
 
-## 🟩 9. Instalação do NVM
+## 🟩 10. Instalação do NVM
 
 O **NVM** **(Node Version Manager)** permite instalar e gerenciar múltiplas versões do **Node.js** dentro do WSL, sem interferir no sistema.
 Ideal para desenvolvimento com **Node**, **React**, **Next.js**, **NestJS**, entre outros frameworks.
 
 ---
 
-### 9.1 — Atualizar pacotes
+### 10.1 — Atualizar pacotes
 
 ```bash
 sudo apt update && sudo apt upgrade -y
@@ -337,7 +393,7 @@ sudo apt update && sudo apt upgrade -y
 
 ---
 
-### 9.2 — Instalar o NVM
+### 10.2 — Instalar o NVM
 
 Baixe e execute o script oficial de instalação:
 
@@ -350,7 +406,7 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 
 ---
 
-### 9.3 — Ativar o NVM no shell
+### 10.3 — Ativar o NVM no shell
 
 Adicione as seguintes linhas ao final do seu `~/.bashrc`, caso o instalador ainda não as tenha adicionado automaticamente:
 
@@ -368,7 +424,7 @@ exec "$SHELL"
 
 ---
 
-### 9.4 — Verificar instalação
+### 10.4 — Verificar instalação
 
 ```bash
 nvm --version
@@ -378,7 +434,7 @@ Se aparecer o número da versão, o NVM foi instalado corretamente ✅
 
 ---
 
-### 9.5 — Instalar uma versão específica do Node.js
+### 10.5 — Instalar uma versão específica do Node.js
 
 Exemplo: instalar a versão LTS atual
 
@@ -401,7 +457,7 @@ npm -v
 
 ---
 
-### 9.6 — Usar múltiplas versões
+### 10.6 — Usar múltiplas versões
 
 Você pode alternar entre versões facilmente:
 
@@ -415,21 +471,21 @@ nvm use 18
 
 ---
 
-### ⚙️ 9.7 — Boas práticas
+### ⚙️ 10.7 — Boas práticas
 
 * Sempre use `nvm install` em vez de `sudo apt install nodejs`
 * Evite instalar Node.js globalmente no sistema
 
 ---
 
-## 🐳 10. Instalação do Docker Engine
+## 🐳 11. Instalação do Docker Engine
 
 O **Docker Engine** permite executar containers Linux diretamente dentro do WSL, sem precisar do Docker Desktop.
 Essa instalação é ideal para quem quer um ambiente 100% Linux, leve e isolado.
 
 ---
 
-### 10.1 — Atualizar pacotes e instalar dependências
+### 11.1 — Atualizar pacotes e instalar dependências
 
 ```bash
 sudo apt update
@@ -438,7 +494,7 @@ sudo apt install ca-certificates curl gnupg lsb-release -y
 
 ---
 
-### 10.2 — Adicionar chave GPG oficial do Docker
+### 11.2 — Adicionar chave GPG oficial do Docker
 
 ```bash
 sudo mkdir -p /etc/apt/keyrings
@@ -447,7 +503,7 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o 
 
 ---
 
-### 10.3 — Adicionar o repositório do Docker
+### 11.3 — Adicionar o repositório do Docker
 
 ```bash
 echo \
@@ -458,7 +514,7 @@ echo \
 
 ---
 
-### 10.4 — Instalar o Docker Engine
+### 11.4 — Instalar o Docker Engine
 
 ```bash
 sudo apt update
@@ -467,7 +523,7 @@ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin dock
 
 ---
 
-### 10.5 — Adicionar seu usuário ao grupo `docker`
+### 11.5 — Adicionar seu usuário ao grupo `docker`
 
 ```bash
 sudo usermod -aG docker $USER
@@ -481,7 +537,7 @@ exec "$SHELL"
 
 ---
 
-### 10.6 — Testar a instalação
+### 11.6 — Testar a instalação
 
 ```bash
 docker version
@@ -492,7 +548,7 @@ Se o comando acima exibir a mensagem “Hello from Docker!”, a instalação fo
 
 ---
 
-## ☸️ 11. Instalação do Minikube, Kubectl e k9s
+## ☸️ 12. Instalação do Minikube, Kubectl e k9s
 
 O **Minikube** permite executar clusters Kubernetes localmente para desenvolvimento e testes.
 O **kubectl** é o cliente de linha de comando para interagir com clusters Kubernetes.
@@ -500,7 +556,7 @@ O **K9s** é uma interface de terminal interativa para gerenciar clusters Kubern
 
 ---
 
-### 11.1 — Atualizar pacotes
+### 12.1 — Atualizar pacotes
 
 ```bash
 sudo apt update && sudo apt upgrade -y
@@ -508,7 +564,7 @@ sudo apt update && sudo apt upgrade -y
 
 ---
 
-### 11.2 — Instalar o Minikube
+### 12.2 — Instalar o Minikube
 
 Baixe a versão mais recente do Minikube para Linux:
 
@@ -524,7 +580,7 @@ sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-a
 
 ---
 
-### 11.3 — Instalar o kubectl
+### 12.3 — Instalar o kubectl
 
 Baixe a versão mais recente do kubectl:
 
@@ -540,7 +596,7 @@ sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl && rm kubect
 
 ---
 
-### 11.4 — Instalar o K9s
+### 12.4 — Instalar o K9s
 
 Baixe o executável compactado:
 
@@ -576,7 +632,7 @@ rm /tmp/k9s.tar.gz
 
 ---
 
-### 11.5 — Verificar instalação
+### 12.5 — Verificar instalação
 
 ```bash
 minikube version
