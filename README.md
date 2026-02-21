@@ -755,7 +755,6 @@ source ~/.bashrc
 
 ```bash
 uv --version
-uv venv
 ```
 
 ---
@@ -763,7 +762,7 @@ uv venv
 ### 14.3 — Instalar dependências
 
 ```bash
-uv add requests
+uv add <lib-name>
 ```
 
 ---
