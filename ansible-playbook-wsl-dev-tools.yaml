@@ -1,5 +1,5 @@
 ---
-- name: Configurar ferramentas de desenvolvimento no WSL (etapas 9, 10, 11 e 12)
+- name: Configurar ferramentas de desenvolvimento no WSL (etapas 9, 10, 11, 12 e 13)
   hosts: localhost
   connection: local
   gather_facts: true
@@ -17,6 +17,7 @@
     pyenv_python_version: "3.13.12"
     nvm_version: "v0.40.3"
     k9s_version: "v0.50.18"
+    goenv_go_version: "1.22.0"
 
     kubectl_version: "{{ lookup('ansible.builtin.url', 'https://dl.k8s.io/release/stable.txt') | trim }}"
 
@@ -323,6 +324,63 @@
           - "kubectl changed={{ kubectl_install.changed }}"
           - "k9s download changed={{ k9s_download.changed }}"
           - "k9s install changed={{ k9s_install.changed }}"
+
+    # -------------------------
+    # 13 GOENV
+    # -------------------------
+    - name: Status | Iniciando instalação do goenv
+      ansible.builtin.debug:
+        msg: "Iniciando instalação do goenv"
+
+    - name: Instalar dependências do goenv
+      ansible.builtin.apt:
+        name:
+          - git
+          - curl
+          - build-essential
+        state: present
+      register: goenv_deps
+
+    - name: Instalar goenv (git clone)
+      become: false
+      ansible.builtin.git:
+        repo: "https://github.com/syndbg/goenv.git"
+        dest: "{{ wsl_home }}/.goenv"
+        version: master
+        update: true
+      register: goenv_git
+
+    - name: Garantir configuração do goenv no .bashrc
+      become: false
+      ansible.builtin.blockinfile:
+        path: "{{ wsl_home }}/.bashrc"
+        marker: "# {mark} ANSIBLE GOENV"
+        block: |
+          export GOENV_ROOT="$HOME/.goenv"
+          export PATH="$GOENV_ROOT/bin:$PATH"
+          eval "$(goenv init -)"
+      register: goenv_bashrc
+
+    - name: Instalar Go via goenv e definir global
+      become: false
+      ansible.builtin.shell: |
+        set -e
+        export GOENV_ROOT="$HOME/.goenv"
+        export PATH="$GOENV_ROOT/bin:$PATH"
+        eval "$(goenv init -)"
+        goenv install -s {{ goenv_go_version }}
+        goenv global {{ goenv_go_version }}
+      args:
+        executable: /bin/bash
+      register: goenv_go
+
+    - name: Status | Instalação do goenv concluída
+      ansible.builtin.debug:
+        msg:
+          - "goenv deps changed={{ goenv_deps.changed }}"
+          - "goenv repo changed={{ goenv_git.changed }}"
+          - "goenv bashrc changed={{ goenv_bashrc.changed }}"
+          - "go via goenv changed={{ goenv_go.changed }}"
 
     - name: Status | Registrar fim em arquivo
       ansible.builtin.lineinfile:

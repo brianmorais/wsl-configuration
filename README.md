@@ -1,6 +1,6 @@
 # 🐧 Guia Completo: Instalação e uso do WSL no Windows
 
-Este guia explica como **remover instalações antigas do WSL**, configurar um ambiente novo, instalar e gerenciar ferramentas como **pyenv**, **Docker**, **NVM**, **Ansible**, **Kubernetes (Minikube, kubectl e K9s)** e usar o **VSCode** de forma otimizada dentro do Linux, além de trazer dicas de boas práticas, configuração de Git e SSH.
+Este guia explica como **remover instalações antigas do WSL**, configurar um ambiente novo, instalar e gerenciar ferramentas como **pyenv**, **Docker**, **NVM**, **goenv** **Ansible**, **Kubernetes (Minikube, kubectl e K9s)** e usar o **VSCode** de forma otimizada dentro do Linux, além de trazer dicas de boas práticas, configuração de Git e SSH.
 
 ## 📋 Sumário
 
@@ -19,6 +19,7 @@ Este guia explica como **remover instalações antigas do WSL**, configurar um a
 10. [🟩 Instalação do NVM](#-10-instalação-do-nvm)
 11. [🐳 Instalação do Docker engine](#-11-instalação-do-docker-engine)
 12. [☸️ Instalação do Minikube, kubectl e k9s](#️-12-instalação-do-minikube-kubectl-e-k9s)
+13. [🚀 Instalação do goenv](#-13-instalação-do-goenv)
 
 ---
 
@@ -643,3 +644,86 @@ k9s version
 ```
 
 Se os comandos acima exibirem as versões instaladas, a instalação foi concluída com sucesso ✅
+
+---
+
+## 🚀 13. Instalação do goenv
+
+O **goenv** permite gerenciar múltiplas versões do **Go** no Linux, facilitando a configuração por projeto e a troca entre versões.
+
+---
+
+### 13.1 — Instalar dependências
+
+Abra o terminal e execute:
+
+```bash
+sudo apt update
+sudo apt install -y git curl build-essential
+```
+
+---
+
+### 13.2 — Instalar o goenv
+
+Clone o repositório oficial do **goenv**:
+
+```bash
+git clone https://github.com/syndbg/goenv.git ~/.goenv
+```
+
+---
+
+### 13.3 — Configurar variáveis de ambiente
+
+Adicione ao final do seu `~/.bashrc`
+
+```bash
+export GOENV_ROOT="$HOME/.goenv"
+export PATH="$GOENV_ROOT/bin:$PATH"
+eval "$(goenv init -)"
+```
+
+Depois, recarregue o shell:
+
+```bash
+source ~/.bashrc
+```
+
+---
+
+### 13.4 — Verificar instalação
+
+```bash
+goenv --version
+```
+
+Se aparecer a versão, está instalado corretamente ✅
+
+---
+
+### 13.5 — Instalar uma versão do Go
+
+Liste as versões disponíveis:
+
+```bash
+goenv install -l
+```
+
+Instale uma versão específica (exemplo):
+
+```bash
+goenv install 1.22.0
+```
+
+Defina como global:
+
+```bash
+goenv global 1.22.0
+```
+
+Verifique:
+
+```bash
+go version
+```
