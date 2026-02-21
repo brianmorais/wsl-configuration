@@ -276,6 +276,8 @@ code meu-projeto
 
 O **Ansible** permite automatizar configurações e provisionamento de ambiente usando playbooks YAML.
 
+> ⚠️ **Observação:** Útil para automatizar as próximas instalações, no final dessa seção tem um comando para isso.
+
 ---
 
 ### 8.1 — Atualizar pacotes
@@ -314,7 +316,7 @@ Se retornar `pong`, o ambiente está pronto para executar playbooks.
 
 ---
 
-> ⚠️ **Observação:** Se preferir, você pode usar o playbook já disponível neste repositório para executar as instalações seguintes automaticamente:
+### 8.5 — (Opcional) Instalação das próximas ferramentas via playbook
 
 ```bash
 curl -fsSL -o /tmp/ansible-playbook-wsl-dev-tools.yaml \

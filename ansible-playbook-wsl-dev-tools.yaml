@@ -13,7 +13,7 @@
     wsl_home: "/home/{{ wsl_user }}"
     status_log_file: "/tmp/wsl_dev_tools_status.log"
 
-    pyenv_python_version: "3.12.7"
+    pyenv_python_version: "3.13.12"
     nvm_version: "v0.40.3"
     k9s_version: "v0.50.18"
 
@@ -127,6 +127,7 @@
     - name: Status | Instalação do pyenv concluída
       ansible.builtin.debug:
         msg:
+          - "Instalação do pyenv concluída"
           - "pyenv deps changed={{ pyenv_deps.changed }}"
           - "pyenv repo changed={{ pyenv_git.changed }}"
           - "bashrc changed={{ pyenv_bashrc.changed }}"
@@ -174,6 +175,7 @@
     - name: Status | Instalação do NVM concluída
       ansible.builtin.debug:
         msg:
+          - "Instalação do NVM concluída"
           - "nvm install changed={{ nvm_install.changed }}"
           - "nvm bashrc changed={{ nvm_bashrc.changed }}"
           - "node lts changed={{ nvm_node.changed }}"
@@ -258,13 +260,14 @@
     - name: Status | Instalação do Docker concluída
       ansible.builtin.debug:
         msg:
+          - "Instalação do Docker concluída"
           - "docker deps changed={{ docker_deps.changed }}"
           - "docker repo changed={{ docker_repo.changed }}"
           - "docker install changed={{ docker_install.changed }}"
           - "docker group changed={{ docker_group.changed }}"
 
     # -------------------------
-    # 12 Minikube, kubectl, k9s
+    # 12 Minikube, kubectl e k9s
     # -------------------------
     - name: Status | Iniciando instalação de K8s tools
       ansible.builtin.debug:
@@ -318,6 +321,7 @@
     - name: Status | Instalação de K8s tools concluída
       ansible.builtin.debug:
         msg:
+          - "Instalação de K8s tools concluída"
           - "minikube changed={{ minikube_install.changed }}"
           - "kubectl changed={{ kubectl_install.changed }}"
           - "k9s download changed={{ k9s_download.changed }}"
