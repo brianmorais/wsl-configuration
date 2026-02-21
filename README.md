@@ -1,6 +1,6 @@
 # 🐧 Guia Completo: Instalação e uso do WSL no Windows
 
-Este guia explica como **remover instalações antigas do WSL**, configurar um ambiente novo, instalar e gerenciar ferramentas como **pyenv**, **Docker**, **NVM**, **Kubernetes (Minikube, kubectl e K9s)** e usar o **VSCode** de forma otimizada dentro do Linux, além de trazer dicas de boas práticas, configuração de Git e SSH.
+Este guia explica como **remover instalações antigas do WSL**, configurar um ambiente novo, instalar e gerenciar ferramentas como **pyenv**, **Docker**, **NVM**, **Ansible**, **Kubernetes (Minikube, kubectl e K9s)** e usar o **VSCode** de forma otimizada dentro do Linux, além de trazer dicas de boas práticas, configuração de Git e SSH.
 
 ## 📋 Sumário
 
