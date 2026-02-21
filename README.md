@@ -743,6 +743,12 @@ O **UV** é um gerenciador de pacotes e ambientes Python extremamente rápido, e
 curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
 
+Adicione ao `~/.bashrc`:
+
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+```
+
 Depois, recarregue o shell:
 
 ```bash
@@ -759,7 +765,14 @@ uv --version
 
 ---
 
-### 14.3 — Instalar dependências
+### 14.3 — Criar ambiente virtual
+```bash
+uv venv
+```
+
+---
+
+### 14.4 — Instalar dependências
 
 ```bash
 uv add <lib-name>
@@ -767,24 +780,8 @@ uv add <lib-name>
 
 ---
 
-### 14.4 — Executar script dentro do ambiente
+### 14.5 — Executar script dentro do ambiente
 
 ```bash
 uv run main.py
-```
-
----
-
-### 🔧 14.5 — Dica extra
-
-Se o comando `uv` não for encontrado após instalar, adicione ao `~/.bashrc`:
-
-```bash
-export PATH="$HOME/.local/bin:$PATH"
-```
-
-E rode:
-
-```bash
-source ~/.bashrc
 ```
