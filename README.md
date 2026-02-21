@@ -317,12 +317,12 @@ Se retornar `pong`, o ambiente está pronto para executar playbooks.
 > ⚠️ **Observação:** Se preferir, você pode usar o playbook já disponível neste repositório para executar as instalações seguintes automaticamente:
 
 ```bash
-curl -fsSL -o /tmp/ansible-playbook-wsl-dev-tools.yml \
+curl -fsSL -o /tmp/ansible-playbook-wsl-dev-tools.yaml \
 https://raw.githubusercontent.com/brianmorais/wsl-configuration/main/ansible-playbook-wsl-dev-tools.yaml
 ```
 
 ```bash
-ansible-playbook -i localhost, -c local /tmp/ansible-playbook-wsl-dev-tools.yml -K
+ansible-playbook -i localhost, -c local /tmp/ansible-playbook-wsl-dev-tools.yaml -K
 ```
 
 ---
