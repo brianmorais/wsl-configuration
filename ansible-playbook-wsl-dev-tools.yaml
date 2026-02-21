@@ -1,5 +1,5 @@
 ---
-- name: Configurar ferramentas de desenvolvimento no WSL (etapas 9, 10, 11, 12 e 13)
+- name: Configurar ferramentas de desenvolvimento no WSL (etapa 9 em diante)
   hosts: localhost
   connection: local
   gather_facts: true
@@ -18,6 +18,7 @@
     nvm_version: "v0.40.3"
     k9s_version: "v0.50.18"
     goenv_go_version: "1.22.0"
+    uv_install_url: "https://astral.sh/uv/install.sh"
 
     kubectl_version: "{{ lookup('ansible.builtin.url', 'https://dl.k8s.io/release/stable.txt') | trim }}"
 
@@ -381,6 +382,49 @@
           - "goenv repo changed={{ goenv_git.changed }}"
           - "goenv bashrc changed={{ goenv_bashrc.changed }}"
           - "go via goenv changed={{ goenv_go.changed }}"
+
+    # -------------------------
+    # 14 UV
+    # -------------------------
+    - name: Status | Iniciando instalação do UV
+      ansible.builtin.debug:
+        msg: "Iniciando instalação do UV"
+
+    - name: Instalar UV
+      become: false
+      ansible.builtin.shell: |
+        curl -LsSf {{ uv_install_url }} | sh
+      args:
+        executable: /bin/bash
+        creates: "{{ wsl_home }}/.local/bin/uv"
+      register: uv_install
+
+    - name: Garantir PATH do UV no .bashrc
+      become: false
+      ansible.builtin.blockinfile:
+        path: "{{ wsl_home }}/.bashrc"
+        marker: "# {mark} ANSIBLE UV"
+        block: |
+          export PATH="$HOME/.local/bin:$PATH"
+      register: uv_bashrc
+
+    - name: Verificar versão do UV
+      become: false
+      ansible.builtin.shell: |
+        set -e
+        export PATH="$HOME/.local/bin:$PATH"
+        uv --version
+      args:
+        executable: /bin/bash
+      register: uv_version
+      changed_when: false
+
+    - name: Status | Instalação do UV concluída
+      ansible.builtin.debug:
+        msg:
+          - "uv install changed={{ uv_install.changed }}"
+          - "uv bashrc changed={{ uv_bashrc.changed }}"
+          - "uv version={{ uv_version.stdout }}"
 
     - name: Status | Registrar fim em arquivo
       ansible.builtin.lineinfile:

@@ -12,7 +12,7 @@ Este guia explica como **remover instalações antigas do WSL**, configurar um a
 3. [🧱 Acessar o terminal Linux](#-3-acessar-o-terminal-linux)
 4. [🧰 Configuração do Git](#-4-configuração-do-git)
 5. [🗝️ Configuração de SSH](#️-5-configuração-de-ssh)
-6. [⚡ Boas práticas no WSL](#-6-boas-práticas-no-wsl)
+6. [✔ Boas práticas no WSL](#-6-boas-práticas-no-wsl)
 7. [💻 Usar o VSCode com o WSL](#-7-usar-o-vscode-com-o-wsl)
 8. [🤖 Instalação do Ansible](#-8-instalação-do-ansible)
 9. [🐍 Instalação do pyenv](#-9-instalação-do-pyenv)
@@ -20,6 +20,7 @@ Este guia explica como **remover instalações antigas do WSL**, configurar um a
 11. [🐳 Instalação do Docker engine](#-11-instalação-do-docker-engine)
 12. [☸️ Instalação do Minikube, kubectl e k9s](#️-12-instalação-do-minikube-kubectl-e-k9s)
 13. [🚀 Instalação do goenv](#-13-instalação-do-goenv)
+14. [⚡ Instalação do UV](#-14-instalação-do-uv)
 
 ---
 
@@ -231,7 +232,7 @@ Para evitar conflitos com a nova chave SSH ou tokens:
 
 ---
 
-## ⚡ 6. Boas práticas no WSL
+## ✔ 6. Boas práticas no WSL
 
 | Ação                                                        | Local recomendado                    |
 | ------------------------------------------------------------|--------------------------------------|
@@ -726,4 +727,65 @@ Verifique:
 
 ```bash
 go version
+```
+
+---
+
+## ⚡ 14. Instalação do UV
+
+O **UV** é um gerenciador de pacotes e ambientes Python extremamente rápido, escrito em Rust.
+
+---
+
+### 14.1 — Instalar o UV
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+Depois, recarregue o shell:
+
+```bash
+source ~/.bashrc
+```
+
+---
+
+### 14.2 — Verificar instalação
+
+```bash
+uv --version
+uv venv
+```
+
+---
+
+### 14.3 — Instalar dependências
+
+```bash
+uv add requests
+```
+
+---
+
+### 14.4 — Executar script dentro do ambiente
+
+```bash
+uv run main.py
+```
+
+---
+
+### 🔧 14.5 — Dica extra
+
+Se o comando `uv` não for encontrado após instalar, adicione ao `~/.bashrc`:
+
+```bash
+export PATH="$HOME/.local/bin:$PATH"
+```
+
+E rode:
+
+```bash
+source ~/.bashrc
 ```
