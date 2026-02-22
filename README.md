@@ -707,14 +707,29 @@ uv --version
 
 ---
 
-### 13.3 — Criar ambiente virtual
+### 13.3 — Criar projeto
+```bash
+mkdir <project-name>
+```
+
+```bash
+cd <project-name>
+```
+
+```bash
+uv init
+```
+
+---
+
+### 13.4 — Criar ambiente virtual
 ```bash
 uv venv
 ```
 
 ---
 
-### 13.4 — Instalar dependências
+### 13.5 — Instalar dependências
 
 ```bash
 uv add <lib-name>
@@ -722,7 +737,7 @@ uv add <lib-name>
 
 ---
 
-### 13.5 — Executar script dentro do ambiente
+### 13.6 — Executar script dentro do ambiente
 
 ```bash
 uv run main.py

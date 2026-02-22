@@ -21,11 +21,12 @@ install-pyenv:
 .PHONY: install-nvm
 install-nvm:
 	sudo apt update && sudo apt upgrade -y
-	curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/$(NVM_VERSION)/install.sh | bash
+	sudo apt install -y curl git
+	export PROFILE=/dev/null; curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/$(NVM_VERSION)/install.sh | bash
 	grep -qxF 'export NVM_DIR="$$HOME/.nvm"' ~/.bashrc || echo 'export NVM_DIR="$$HOME/.nvm"' >> ~/.bashrc
 	grep -qxF '[ -s "$$NVM_DIR/nvm.sh" ] && \. "$$NVM_DIR/nvm.sh"' ~/.bashrc || echo '[ -s "$$NVM_DIR/nvm.sh" ] && \. "$$NVM_DIR/nvm.sh"' >> ~/.bashrc
 	grep -qxF '[ -s "$$NVM_DIR/bash_completion" ] && \. "$$NVM_DIR/bash_completion"' ~/.bashrc || echo '[ -s "$$NVM_DIR/bash_completion" ] && \. "$$NVM_DIR/bash_completion"' >> ~/.bashrc
-	bash -lc 'export NVM_DIR="$$HOME/.nvm"; [ -s "$$NVM_DIR/nvm.sh" ] && . "$$NVM_DIR/nvm.sh"; [ -s "$$NVM_DIR/bash_completion" ] && . "$$NVM_DIR/bash_completion"; nvm install --lts; nvm alias default lts/*'
+	bash -lc 'export NVM_DIR="$$HOME/.nvm"; if [ ! -s "$$NVM_DIR/nvm.sh" ]; then echo "nvm não foi instalado corretamente em $$NVM_DIR" >&2; exit 1; fi; . "$$NVM_DIR/nvm.sh"; [ -s "$$NVM_DIR/bash_completion" ] && . "$$NVM_DIR/bash_completion"; nvm install --lts; nvm alias default "lts/*"'
 
 .PHONY: install-docker
 install-docker:
@@ -42,6 +43,7 @@ install-docker:
 .PHONY: install-k8s-tools
 install-k8s-tools:
 	sudo apt update && sudo apt upgrade -y
+	sudo apt install -y curl git tar wget
 	curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
 	sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
 	curl -LO "https://dl.k8s.io/release/$$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
@@ -64,6 +66,7 @@ install-goenv:
 
 .PHONY: install-uv
 install-uv:
+	sudo apt update && sudo apt install -y curl
 	curl -LsSf https://astral.sh/uv/install.sh | sh
 	grep -qxF 'export PATH="$$HOME/.local/bin:$$PATH"' ~/.bashrc || echo 'export PATH="$$HOME/.local/bin:$$PATH"' >> ~/.bashrc
 
