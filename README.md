@@ -317,8 +317,8 @@ exec "$SHELL"
 ### 8.5 — Instalar e definir uma versão do Python
 
 ```bash
-pyenv install 3.12.7
-pyenv global 3.12.7
+pyenv install 3.13.12
+pyenv global 3.13.12
 python --version
 ```
 
