@@ -708,14 +708,18 @@ uv --version
 ---
 
 ### 13.3 — Criar projeto
+
+Crie a pasta do projeto:
 ```bash
 mkdir <project-name>
 ```
 
+Entre na pasta:
 ```bash
 cd <project-name>
 ```
 
+Inicialize o projeto:
 ```bash
 uv init
 ```
