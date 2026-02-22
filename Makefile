@@ -4,6 +4,8 @@ K9S_VERSION ?= v0.50.18
 NVM_VERSION ?= v0.40.3
 PYTHON_VERSION ?= 3.13.12
 GO_VERSION ?= 1.22.5
+GIT_USER_NAME ?= "<git-user-name>"
+GIT_USER_EMAIL ?= "<git-user-email>"
 
 .PHONY: install-pyenv
 install-pyenv:
@@ -72,3 +74,11 @@ install-uv:
 
 .PHONY: install-all
 install-all: install-pyenv install-nvm install-docker install-k8s-tools install-goenv install-uv
+
+.PHONY: configure-git
+configure-git:
+	sudo apt update && sudo apt install -y git
+	git config --global user.name $(GIT_USER_NAME)
+	git config --global user.email $(GIT_USER_EMAIL)
+	git config --global init.defaultBranch main
+	git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git-credential-manager.exe"
