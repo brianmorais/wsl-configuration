@@ -179,7 +179,6 @@ sudo apt install git -y
 > Essas informações aparecem nos commits.
 
 ```bash
-git config --global init.defaultBranch main
 git config --global user.name "Seu Nome"
 git config --global user.email "seu.email@empresa.com"
 ```
