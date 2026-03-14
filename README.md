@@ -208,6 +208,8 @@ git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git
 
 ---
 
+## 🗝️ 5. Configuração de SSH
+
 ### 5.1 — Gerar chave SSH
 
 Execute no terminal:
