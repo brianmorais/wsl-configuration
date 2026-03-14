@@ -208,17 +208,44 @@ git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git
 
 ---
 
-## 🗝️ 5. Configuração de SSH
+### 5.1 — Gerar chave SSH
 
-Para autenticação segura com GitHub, utilize **chaves SSH**.
+Execute no terminal:
+```bash
+ssh-keygen -t ed25519 -C "seu_email@example.com"
+```
 
-### 5.1 — Seguir o passo a passo oficial fornecido pela empresa
-
-> Siga exatamente as instruções fornecidas no guia para criar e registrar sua chave SSH.
+Caso seu sistema não suporte ed25519, utilize:
+```bash
+ssh-keygen -t rsa -b 4096 -C "seu_email@example.com"
+```
 
 ---
 
-### 5.2 — Remover credenciais antigas do Windows Credential Manager
+### 5.2 — Copiar a chave pública
+
+Exiba o conteúdo da chave pública:
+```bash
+cat ~/.ssh/id_ed25519.pub
+```
+
+Copie toda a saída do terminal.
+
+---
+
+### 5.3 — Adicionar chave ao GitHub
+
+* Acesse as configurações de SSH keys: [https://github.com/settings/keys](https://github.com/settings/keys)
+* Clique em **New SSH key**
+* Preencha:
+  * **Title**: Nome do dispositivo (ex: wsl-dev)
+  * **Key**: Cole a chave pública copiada anteriormente
+  * **Key type**: Authentication Key
+* Clique em **Add SSH key**
+
+---
+
+### 5.4 — Remover credenciais antigas do Windows Credential Manager
 
 Para evitar conflitos com a nova chave SSH ou tokens:
 
