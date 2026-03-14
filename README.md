@@ -180,7 +180,7 @@ sudo apt install git -y
 
 ```bash
 git config --global user.name "Seu Nome"
-git config --global user.email "seu.email@empresa.com"
+git config --global user.email "seu_email@example.com"
 ```
 
 Verifique:
