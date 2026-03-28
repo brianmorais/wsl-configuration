@@ -20,6 +20,7 @@ Este guia explica como **remover instalações antigas do WSL**, configurar um a
 11. [☸️ Instalação do Minikube, kubectl e k9s](#️-11-instalação-do-minikube-kubectl-e-k9s)
 12. [🚀 Instalação do goenv](#-12-instalação-do-goenv)
 13. [⚡ Instalação do UV](#-13-instalação-do-uv)
+14. [☁️ Instalação do AWS CLI e SAM CLI](#️-14-instalação-do-aws-cli-e-sam-cli)
 
 ---
 
@@ -774,4 +775,168 @@ uv add <lib-name>
 
 ```bash
 uv run main.py
+```
+
+---
+
+## ☁️ 14. Instalação do AWS CLI e SAM CLI
+
+O **AWS CLI** é a interface de linha de comando oficial da Amazon Web Services, permitindo gerenciar recursos AWS diretamente do terminal.
+O **SAM CLI** (Serverless Application Model) é uma ferramenta para desenvolvimento, teste e deploy de aplicações serverless na AWS.
+
+---
+
+### 14.1 — Atualizar pacotes
+
+```bash
+sudo apt update && sudo apt upgrade -y
+```
+
+---
+
+### 14.2 — Instalar dependências
+
+```bash
+sudo apt install -y curl unzip
+```
+
+---
+
+### 14.3 — Instalar o AWS CLI
+
+Baixe o instalador oficial:
+
+```bash
+curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+```
+
+Extraia o arquivo:
+
+```bash
+unzip awscliv2.zip
+```
+
+Execute o instalador:
+
+```bash
+sudo ./aws/install
+```
+
+Remova os arquivos temporários:
+
+```bash
+rm -rf aws awscliv2.zip
+```
+
+---
+
+### 14.4 — Verificar instalação do AWS CLI
+
+```bash
+aws --version
+```
+
+Se o comando exibir a versão instalada, o AWS CLI foi configurado com sucesso ✅
+
+---
+
+### 14.5 — Configurar credenciais da AWS
+
+Execute o comando de configuração:
+
+```bash
+aws configure
+```
+
+Será solicitado:
+
+* **AWS Access Key ID**: Sua chave de acesso
+* **AWS Secret Access Key**: Sua chave secreta
+* **Default region name**: Região padrão (ex: `us-east-1`, `sa-east-1`)
+* **Default output format**: Formato de saída (recomendado: `json`)
+
+> 🔸 **Dica:** Para obter suas credenciais, acesse o console AWS → IAM → Users → Security credentials
+
+---
+
+### 14.6 — Instalar o SAM CLI
+
+O SAM CLI requer Python 3.8 ou superior. Verifique sua versão:
+
+```bash
+python3 --version
+```
+
+Baixe o instalador do SAM CLI:
+
+```bash
+curl -L "https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip" -o "sam-cli.zip"
+```
+
+Extraia o arquivo:
+
+```bash
+unzip sam-cli.zip -d sam-installation
+```
+
+Execute o instalador:
+
+```bash
+sudo ./sam-installation/install
+```
+
+Remova os arquivos temporários:
+
+```bash
+rm -rf sam-installation sam-cli.zip
+```
+
+---
+
+### 14.7 — Verificar instalação do SAM CLI
+
+```bash
+sam --version
+```
+
+Se o comando exibir a versão instalada, o SAM CLI foi configurado com sucesso ✅
+
+---
+
+### 14.8 — Iniciar um projeto SAM (exemplo)
+
+Crie um novo projeto serverless:
+
+```bash
+sam init
+```
+
+O comando interativo irá guiá-lo na criação de um projeto com templates pré-configurados.
+
+---
+
+### 14.9 — Comandos úteis
+
+**AWS CLI:**
+```bash
+# Listar buckets S3
+aws s3 ls
+
+# Listar instâncias EC2
+aws ec2 describe-instances
+
+# Listar funções Lambda
+aws lambda list-functions
+```
+
+**SAM CLI:**
+```bash
+# Construir aplicação
+sam build
+
+# Testar localmente
+sam local invoke
+
+# Fazer deploy
+sam deploy --guided
 ```
