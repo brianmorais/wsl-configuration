@@ -912,31 +912,3 @@ sam init
 ```
 
 O comando interativo irá guiá-lo na criação de um projeto com templates pré-configurados.
-
----
-
-### 14.9 — Comandos úteis
-
-**AWS CLI:**
-```bash
-# Listar buckets S3
-aws s3 ls
-
-# Listar instâncias EC2
-aws ec2 describe-instances
-
-# Listar funções Lambda
-aws lambda list-functions
-```
-
-**SAM CLI:**
-```bash
-# Construir aplicação
-sam build
-
-# Testar localmente
-sam local invoke
-
-# Fazer deploy
-sam deploy --guided
-```
