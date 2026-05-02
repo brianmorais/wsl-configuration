@@ -120,9 +120,9 @@ shutdown /r /t 0
 
 Esses comandos ativam:
 
-* O **WSL**
-* A **Virtual Machine Platform**
-* A **Windows Hypervisor Platform**
+- O **WSL**
+- A **Virtual Machine Platform**
+- A **Windows Hypervisor Platform**
 
 O computador será reiniciado para aplicar as alterações.
 
@@ -140,9 +140,9 @@ wsl --update
 
 Esses comandos:
 
-* Definem o **WSL 2** como padrão (melhor desempenho)
-* Instalam o **Ubuntu** (distribuição padrão)
-* Atualizam o kernel
+- Definem o **WSL 2** como padrão (melhor desempenho)
+- Instalam o **Ubuntu** (distribuição padrão)
+- Atualizam o kernel
 
 ---
 
@@ -150,8 +150,8 @@ Esses comandos:
 
 Após a instalação:
 
-* Abra o aplicativo **Ubuntu** no menu Iniciar.
-* Crie seu **usuário e senha Linux**.
+- Abra o aplicativo **Ubuntu** no menu Iniciar.
+- Crie seu **usuário e senha Linux**.
 
 > **Observação**: Também é possível acessar o Ubuntu pelo Windows Terminal.
 
@@ -214,11 +214,13 @@ git config --global credential.helper "/mnt/c/Program\ Files/Git/mingw64/bin/git
 ### 5.1 — Gerar chave SSH
 
 Execute no terminal:
+
 ```bash
 ssh-keygen -t ed25519 -C "seu_email@example.com"
 ```
 
 Caso seu sistema não suporte ed25519, utilize:
+
 ```bash
 ssh-keygen -t rsa -b 4096 -C "seu_email@example.com"
 ```
@@ -228,6 +230,7 @@ ssh-keygen -t rsa -b 4096 -C "seu_email@example.com"
 ### 5.2 — Copiar a chave pública
 
 Exiba o conteúdo da chave pública:
+
 ```bash
 cat ~/.ssh/id_ed25519.pub
 ```
@@ -238,13 +241,13 @@ Copie toda a saída do terminal.
 
 ### 5.3 — Adicionar chave ao GitHub
 
-* Acesse as configurações de SSH keys: [https://github.com/settings/keys](https://github.com/settings/keys)
-* Clique em **New SSH key**
-* Preencha:
-  * **Title**: Nome do dispositivo (ex: wsl-dev)
-  * **Key**: Cole a chave pública copiada anteriormente
-  * **Key type**: Authentication Key
-* Clique em **Add SSH key**
+- Acesse as configurações de SSH keys: [https://github.com/settings/keys](https://github.com/settings/keys)
+- Clique em **New SSH key**
+- Preencha:
+  - **Title**: Nome do dispositivo (ex: wsl-dev)
+  - **Key**: Cole a chave pública copiada anteriormente
+  - **Key type**: Authentication Key
+- Clique em **Add SSH key**
 
 ---
 
@@ -264,7 +267,7 @@ Para evitar conflitos com a nova chave SSH ou tokens:
 ## ✔ 6. Boas práticas no WSL
 
 | Ação                                                        | Local recomendado                    |
-| ------------------------------------------------------------|--------------------------------------|
+| ----------------------------------------------------------- | ------------------------------------ |
 | Clonar repositórios                                         | `/home/<user>/<projects-folder>/...` |
 | Instalar dependências Python ou de qualquer outra linguagem | Dentro do WSL                        |
 | Rodar containers Docker/Podman                              | Dentro do WSL                        |
@@ -449,8 +452,8 @@ nvm use 18
 
 ### ⚙️ 9.7 — Boas práticas
 
-* Sempre use `nvm install` em vez de `sudo apt install nodejs`
-* Evite instalar Node.js globalmente no sistema
+- Sempre use `nvm install` em vez de `sudo apt install nodejs`
+- Evite instalar Node.js globalmente no sistema
 
 ---
 
@@ -740,16 +743,19 @@ uv --version
 ### 13.3 — Criar projeto
 
 Crie a pasta do projeto:
+
 ```bash
 mkdir <project-name>
 ```
 
 Entre na pasta:
+
 ```bash
 cd <project-name>
 ```
 
 Inicialize o projeto:
+
 ```bash
 uv init
 ```
@@ -757,6 +763,7 @@ uv init
 ---
 
 ### 13.4 — Criar ambiente virtual
+
 ```bash
 uv venv
 ```
@@ -850,10 +857,10 @@ aws configure
 
 Será solicitado:
 
-* **AWS Access Key ID**: Sua chave de acesso
-* **AWS Secret Access Key**: Sua chave secreta
-* **Default region name**: Região padrão (ex: `us-east-1`, `sa-east-1`)
-* **Default output format**: Formato de saída (recomendado: `json`)
+- **AWS Access Key ID**: Sua chave de acesso
+- **AWS Secret Access Key**: Sua chave secreta
+- **Default region name**: Região padrão (ex: `us-east-1`, `sa-east-1`)
+- **Default output format**: Formato de saída (recomendado: `json`)
 
 > 🔸 **Dica:** Para obter suas credenciais, acesse o console AWS → IAM → Users → Security credentials
 
