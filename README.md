@@ -4,7 +4,7 @@ Este guia explica como **remover instalações antigas do WSL**, configurar um a
 
 ## 📋 Sumário
 
-> ⚠️ **Atenção:** A instalação e configuração base do WSL é finalizada no passo 7, os demais passos são opcionais de acordo com a necessidade do usuário.
+> ⚠️ **Atenção:** A instalação e configuração base do WSL é finalizada no passo 8, os demais passos são opcionais de acordo com a necessidade do usuário.
 
 0. [🧹 Remover instalação antiga do WSL se necessário](#-0-remover-instalação-antiga-do-wsl-se-necessário)
 1. [🧩 Habilitar recursos necessários do Windows](#-1-habilitar-os-recursos-necessários-do-windows)
@@ -14,13 +14,14 @@ Este guia explica como **remover instalações antigas do WSL**, configurar um a
 5. [🗝️ Configuração de SSH](#️-5-configuração-de-ssh)
 6. [✔ Boas práticas no WSL](#-6-boas-práticas-no-wsl)
 7. [💻 Usar o VSCode com o WSL](#-7-usar-o-vscode-com-o-wsl)
-8. [🐍 Instalação do pyenv](#-8-instalação-do-pyenv)
-9. [🟩 Instalação do NVM](#-9-instalação-do-nvm)
-10. [🐳 Instalação do Docker engine](#-10-instalação-do-docker-engine)
-11. [☸️ Instalação do Minikube, kubectl e k9s](#️-11-instalação-do-minikube-kubectl-e-k9s)
-12. [🚀 Instalação do goenv](#-12-instalação-do-goenv)
-13. [⚡ Instalação do UV](#-13-instalação-do-uv)
-14. [☁️ Instalação do AWS CLI e SAM CLI](#️-14-instalação-do-aws-cli-e-sam-cli)
+8. [⚙️ Configuração avançada do WSL](#️-8-configuração-avançada-do-wsl)
+9. [🐍 Instalação do pyenv](#-9-instalação-do-pyenv)
+10. [🟩 Instalação do NVM](#-10-instalação-do-nvm)
+11. [🐳 Instalação do Docker engine](#-11-instalação-do-docker-engine)
+12. [☸️ Instalação do Minikube, kubectl e k9s](#️-12-instalação-do-minikube-kubectl-e-k9s)
+13. [🚀 Instalação do goenv](#-13-instalação-do-goenv)
+14. [⚡ Instalação do UV](#-14-instalação-do-uv)
+15. [☁️ Instalação do AWS CLI e SAM CLI](#️-15-instalação-do-aws-cli-e-sam-cli)
 
 ---
 
@@ -306,17 +307,81 @@ code meu-projeto
 
 ---
 
-## 🐍 8. Instalação do pyenv
+## ⚙️ 8. Configuração avançada do WSL
+
+Para personalizar o comportamento do WSL e otimizar o uso de recursos da sua máquina, você pode utilizar arquivos de configuração que controlam limites de memória, CPU, rede e outros aspectos do sistema.
+
+> 📚 **Documentação oficial**: [https://learn.microsoft.com/pt-br/windows/wsl/wsl-config](https://learn.microsoft.com/pt-br/windows/wsl/wsl-config)
+
+### 8.1 — Arquivo `.wslconfig` (configuração global)
+
+Este arquivo configura todas as distribuições WSL 2 no Windows.
+
+**Localização**: `%USERPROFILE%\.wslconfig` (Windows)
+
+Exemplo de configuração:
+
+```ini
+[wsl2]
+memory=8GB
+processors=4
+swap=2GB
+```
+
+**Principais opções**:
+- `memory`: Limite de memória RAM para o WSL
+- `processors`: Número de processadores virtuais
+- `swap`: Tamanho do arquivo de swap
+
+### 8.2 — Arquivo `wsl.conf` (configuração por distribuição)
+
+Este arquivo configura uma distribuição específica.
+
+**Localização**: `/etc/wsl.conf` (dentro do Linux)
+
+Exemplo de configuração:
+
+```ini
+[boot]
+systemd=true
+
+[automount]
+enabled=true
+root=/mnt/
+options="metadata,umask=22,fmask=11"
+
+[network]
+generateResolvConf=true
+```
+
+**Principais seções**:
+- `[boot]`: Configurações de inicialização (como systemd)
+- `[automount]`: Como montar os drives do Windows
+- `[network]`: Configurações de rede
+
+### 8.3 — Aplicar as configurações
+
+Após editar `.wslconfig` ou `wsl.conf`, reinicie o WSL:
+
+```powershell
+wsl --shutdown
+```
+
+Depois, abra novamente sua distribuição Linux.
+
+---
+
+## 🐍 9. Instalação do pyenv
 
 O pyenv permite gerenciar múltiplas versões do Python no Linux.
 
-### 8.1 — Atualizar pacotes
+### 9.1 — Atualizar pacotes
 
 ```bash
 sudo apt update && sudo apt upgrade -y
 ```
 
-### 8.2 — Instalar dependências necessárias
+### 9.2 — Instalar dependências necessárias
 
 ```bash
 sudo apt install -y make build-essential libssl-dev zlib1g-dev \
@@ -325,13 +390,13 @@ libncurses5-dev libncursesw5-dev xz-utils tk-dev libffi-dev \
 liblzma-dev git
 ```
 
-### 8.3 — Instalar o pyenv
+### 9.3 — Instalar o pyenv
 
 ```bash
 curl https://pyenv.run | bash
 ```
 
-### 8.4 — Configurar o shell
+### 9.4 — Configurar o shell
 
 Adicione as seguintes linhas ao final do arquivo `~/.bashrc`:
 
@@ -347,7 +412,7 @@ Recarregue o shell:
 exec "$SHELL"
 ```
 
-### 8.5 — Instalar e definir uma versão do Python
+### 9.5 — Instalar e definir uma versão do Python
 
 ```bash
 pyenv install 3.13.12
@@ -357,14 +422,14 @@ python --version
 
 ---
 
-## 🟩 9. Instalação do NVM
+## 🟩 10. Instalação do NVM
 
 O **NVM** **(Node Version Manager)** permite instalar e gerenciar múltiplas versões do **Node.js** dentro do WSL, sem interferir no sistema.
 Ideal para desenvolvimento com **Node**, **React**, **Next.js**, **NestJS**, entre outros frameworks.
 
 ---
 
-### 9.1 — Atualizar pacotes
+### 10.1 — Atualizar pacotes
 
 ```bash
 sudo apt update && sudo apt upgrade -y
@@ -372,7 +437,7 @@ sudo apt update && sudo apt upgrade -y
 
 ---
 
-### 9.2 — Instalar o NVM
+### 10.2 — Instalar o NVM
 
 Baixe e execute o script oficial de instalação:
 
@@ -385,7 +450,7 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.40.3/install.sh | bash
 
 ---
 
-### 9.3 — Ativar o NVM no shell
+### 10.3 — Ativar o NVM no shell
 
 Adicione as seguintes linhas ao final do seu `~/.bashrc`, caso o instalador ainda não as tenha adicionado automaticamente:
 
@@ -403,7 +468,7 @@ exec "$SHELL"
 
 ---
 
-### 9.4 — Verificar instalação
+### 10.4 — Verificar instalação
 
 ```bash
 nvm --version
@@ -413,7 +478,7 @@ Se aparecer o número da versão, o NVM foi instalado corretamente ✅
 
 ---
 
-### 9.5 — Instalar uma versão específica do Node.js
+### 10.5 — Instalar uma versão específica do Node.js
 
 Exemplo: instalar a versão LTS atual
 
@@ -436,7 +501,7 @@ npm -v
 
 ---
 
-### 9.6 — Usar múltiplas versões
+### 10.6 — Usar múltiplas versões
 
 Você pode alternar entre versões facilmente:
 
@@ -450,21 +515,21 @@ nvm use 18
 
 ---
 
-### ⚙️ 9.7 — Boas práticas
+### ⚙️ 10.7 — Boas práticas
 
 - Sempre use `nvm install` em vez de `sudo apt install nodejs`
 - Evite instalar Node.js globalmente no sistema
 
 ---
 
-## 🐳 10. Instalação do Docker Engine
+## 🐳 11. Instalação do Docker Engine
 
 O **Docker Engine** permite executar containers Linux diretamente dentro do WSL, sem precisar do Docker Desktop.
 Essa instalação é ideal para quem quer um ambiente 100% Linux, leve e isolado.
 
 ---
 
-### 10.1 — Atualizar pacotes e instalar dependências
+### 11.1 — Atualizar pacotes e instalar dependências
 
 ```bash
 sudo apt update
@@ -473,7 +538,7 @@ sudo apt install ca-certificates curl gnupg lsb-release -y
 
 ---
 
-### 10.2 — Adicionar chave GPG oficial do Docker
+### 11.2 — Adicionar chave GPG oficial do Docker
 
 ```bash
 sudo mkdir -p /etc/apt/keyrings
@@ -482,7 +547,7 @@ curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o 
 
 ---
 
-### 10.3 — Adicionar o repositório do Docker
+### 11.3 — Adicionar o repositório do Docker
 
 ```bash
 echo \
@@ -493,7 +558,7 @@ echo \
 
 ---
 
-### 10.4 — Instalar o Docker Engine
+### 11.4 — Instalar o Docker Engine
 
 ```bash
 sudo apt update
@@ -502,7 +567,7 @@ sudo apt install docker-ce docker-ce-cli containerd.io docker-buildx-plugin dock
 
 ---
 
-### 10.5 — Adicionar seu usuário ao grupo `docker`
+### 11.5 — Adicionar seu usuário ao grupo `docker`
 
 ```bash
 sudo usermod -aG docker $USER
@@ -516,18 +581,18 @@ exec "$SHELL"
 
 ---
 
-### 10.6 — Testar a instalação
+### 11.6 — Testar a instalação
 
 ```bash
 docker version
 docker run hello-world
 ```
 
-Se o comando acima exibir a mensagem “Hello from Docker!”, a instalação foi concluída com sucesso. 🚀
+Se o comando acima exibir a mensagem "Hello from Docker!", a instalação foi concluída com sucesso. 🚀
 
 ---
 
-## ☸️ 11. Instalação do Minikube, Kubectl e k9s
+## ☸️ 12. Instalação do Minikube, Kubectl e k9s
 
 O **Minikube** permite executar clusters Kubernetes localmente para desenvolvimento e testes.
 O **kubectl** é o cliente de linha de comando para interagir com clusters Kubernetes.
@@ -535,7 +600,7 @@ O **K9s** é uma interface de terminal interativa para gerenciar clusters Kubern
 
 ---
 
-### 11.1 — Atualizar pacotes
+### 12.1 — Atualizar pacotes
 
 ```bash
 sudo apt update && sudo apt upgrade -y
@@ -543,7 +608,7 @@ sudo apt update && sudo apt upgrade -y
 
 ---
 
-### 11.2 — Instalar o Minikube
+### 12.2 — Instalar o Minikube
 
 Baixe a versão mais recente do Minikube para Linux:
 
@@ -559,7 +624,7 @@ sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-a
 
 ---
 
-### 11.3 — Instalar o kubectl
+### 12.3 — Instalar o kubectl
 
 Baixe a versão mais recente do kubectl:
 
@@ -575,7 +640,7 @@ sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl && rm kubect
 
 ---
 
-### 11.4 — Instalar o K9s
+### 12.4 — Instalar o K9s
 
 Baixe o executável compactado:
 
@@ -611,7 +676,7 @@ rm /tmp/k9s.tar.gz
 
 ---
 
-### 11.5 — Verificar instalação
+### 12.5 — Verificar instalação
 
 ```bash
 minikube version
@@ -623,13 +688,13 @@ Se os comandos acima exibirem as versões instaladas, a instalação foi conclu�
 
 ---
 
-## 🚀 12. Instalação do goenv
+## 🚀 13. Instalação do goenv
 
 O **goenv** permite gerenciar múltiplas versões do **Go** no Linux, facilitando a configuração por projeto e a troca entre versões.
 
 ---
 
-### 12.1 — Instalar dependências
+### 13.1 — Instalar dependências
 
 Abra o terminal e execute:
 
@@ -640,7 +705,7 @@ sudo apt install -y git curl build-essential
 
 ---
 
-### 12.2 — Instalar o goenv
+### 13.2 — Instalar o goenv
 
 Clone o repositório oficial do **goenv**:
 
@@ -650,7 +715,7 @@ git clone https://github.com/syndbg/goenv.git ~/.goenv
 
 ---
 
-### 12.3 — Configurar variáveis de ambiente
+### 13.3 — Configurar variáveis de ambiente
 
 Adicione ao final do seu `~/.bashrc`
 
@@ -668,7 +733,7 @@ source ~/.bashrc
 
 ---
 
-### 12.4 — Verificar instalação
+### 13.4 — Verificar instalação
 
 ```bash
 goenv --version
@@ -678,7 +743,7 @@ Se aparecer a versão, está instalado corretamente ✅
 
 ---
 
-### 12.5 — Instalar uma versão do Go
+### 13.5 — Instalar uma versão do Go
 
 Liste as versões disponíveis:
 
@@ -706,13 +771,13 @@ go version
 
 ---
 
-## ⚡ 13. Instalação do UV
+## ⚡ 14. Instalação do UV
 
 O **UV** é um gerenciador de pacotes e ambientes Python extremamente rápido, escrito em Rust.
 
 ---
 
-### 13.1 — Instalar o UV
+### 14.1 — Instalar o UV
 
 ```bash
 curl -LsSf https://astral.sh/uv/install.sh | sh
@@ -732,7 +797,7 @@ source ~/.bashrc
 
 ---
 
-### 13.2 — Verificar instalação
+### 14.2 — Verificar instalação
 
 ```bash
 uv --version
@@ -740,7 +805,7 @@ uv --version
 
 ---
 
-### 13.3 — Criar projeto
+### 14.3 — Criar projeto
 
 Crie a pasta do projeto:
 
@@ -762,7 +827,7 @@ uv init
 
 ---
 
-### 13.4 — Criar ambiente virtual
+### 14.4 — Criar ambiente virtual
 
 ```bash
 uv venv
@@ -770,7 +835,7 @@ uv venv
 
 ---
 
-### 13.5 — Instalar dependências
+### 14.5 — Instalar dependências
 
 ```bash
 uv add <lib-name>
@@ -778,7 +843,7 @@ uv add <lib-name>
 
 ---
 
-### 13.6 — Executar script dentro do ambiente
+### 14.6 — Executar script dentro do ambiente
 
 ```bash
 uv run main.py
@@ -786,14 +851,14 @@ uv run main.py
 
 ---
 
-## ☁️ 14. Instalação do AWS CLI e SAM CLI
+## ☁️ 15. Instalação do AWS CLI e SAM CLI
 
 O **AWS CLI** é a interface de linha de comando oficial da Amazon Web Services, permitindo gerenciar recursos AWS diretamente do terminal.
 O **SAM CLI** (Serverless Application Model) é uma ferramenta para desenvolvimento, teste e deploy de aplicações serverless na AWS.
 
 ---
 
-### 14.1 — Atualizar pacotes
+### 15.1 — Atualizar pacotes
 
 ```bash
 sudo apt update && sudo apt upgrade -y
@@ -801,7 +866,7 @@ sudo apt update && sudo apt upgrade -y
 
 ---
 
-### 14.2 — Instalar dependências
+### 15.2 — Instalar dependências
 
 ```bash
 sudo apt install -y curl unzip
@@ -809,7 +874,7 @@ sudo apt install -y curl unzip
 
 ---
 
-### 14.3 — Instalar o AWS CLI
+### 15.3 — Instalar o AWS CLI
 
 Baixe o instalador oficial:
 
@@ -837,7 +902,7 @@ rm -rf aws awscliv2.zip
 
 ---
 
-### 14.4 — Verificar instalação do AWS CLI
+### 15.4 — Verificar instalação do AWS CLI
 
 ```bash
 aws --version
@@ -847,7 +912,7 @@ Se o comando exibir a versão instalada, o AWS CLI foi configurado com sucesso �
 
 ---
 
-### 14.5 — Configurar credenciais da AWS
+### 15.5 — Configurar credenciais da AWS
 
 Execute o comando de configuração:
 
@@ -866,7 +931,7 @@ Será solicitado:
 
 ---
 
-### 14.6 — Instalar o SAM CLI
+### 15.6 — Instalar o SAM CLI
 
 O SAM CLI requer Python 3.8 ou superior. Verifique sua versão:
 
@@ -900,7 +965,7 @@ rm -rf sam-installation sam-cli.zip
 
 ---
 
-### 14.7 — Verificar instalação do SAM CLI
+### 15.7 — Verificar instalação do SAM CLI
 
 ```bash
 sam --version
@@ -910,7 +975,7 @@ Se o comando exibir a versão instalada, o SAM CLI foi configurado com sucesso �
 
 ---
 
-### 14.8 — Iniciar um projeto SAM (exemplo)
+### 15.8 — Iniciar um projeto SAM (exemplo)
 
 Crie um novo projeto serverless:
 
