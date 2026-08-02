@@ -22,6 +22,8 @@ Este guia explica como **remover instalações antigas do WSL**, configurar um a
 13. [🚀 Instalação do goenv](#-13-instalação-do-goenv)
 14. [⚡ Instalação do UV](#-14-instalação-do-uv)
 15. [☁️ Instalação do AWS CLI e SAM CLI](#️-15-instalação-do-aws-cli-e-sam-cli)
+16. [⚡ Instalação do Apache Spark](#-16-instalação-do-apache-spark)
+17. [🗄️ Instalação do Oracle Instant Client](#️-17-instalação-do-oracle-instant-client)
 
 ---
 
@@ -383,6 +385,7 @@ swap=2GB
 ```
 
 **Principais opções**:
+
 - `memory`: Limite de memória RAM para o WSL
 - `processors`: Número de processadores virtuais
 - `swap`: Tamanho do arquivo de swap
@@ -409,6 +412,7 @@ generateResolvConf=true
 ```
 
 **Principais seções**:
+
 - `[boot]`: Configurações de inicialização (como systemd)
 - `[automount]`: Como montar os drives do Windows
 - `[network]`: Configurações de rede
@@ -1038,3 +1042,236 @@ sam init
 ```
 
 O comando interativo irá guiá-lo na criação de um projeto com templates pré-configurados.
+
+---
+
+## ⚡ 16. Instalação do Apache Spark
+
+O **Apache Spark** é um framework distribuído para processamento de grandes volumes de dados em memória, amplamente utilizado em projetos de Engenharia de Dados, Machine Learning e Analytics.
+
+Esta instalação utiliza o **Apache Spark** com **Hadoop 3** e o **OpenJDK 21**, configurando o ambiente para uso direto no WSL.
+
+---
+
+### 16.1 — Atualizar pacotes e instalar dependências
+
+Atualize os pacotes do sistema e instale as dependências necessárias:
+
+```bash
+sudo apt update && sudo apt upgrade -y
+
+sudo apt install -y \
+    openjdk-21-jdk \
+    wget \
+    git
+```
+
+---
+
+### 16.2 — Baixar e instalar o Apache Spark
+
+Crie o diretório onde o Spark será instalado:
+
+```bash
+sudo mkdir -p /opt/spark
+```
+
+Entre no diretório:
+
+```bash
+cd /opt/spark
+```
+
+Baixe a distribuição oficial do Spark.
+
+> 🔸 **Dica:** Antes de realizar o download, verifique no site oficial qual é a versão estável mais recente do Apache Spark.
+>
+> 👉 https://spark.apache.org/downloads.html
+>
+> Basta substituir o número da versão nos dois pontos da URL abaixo. Por exemplo, para instalar a versão `4.1.0`, altere `4.0.0` para `4.1.0` no caminho do download.
+
+```bash
+sudo wget https://dlcdn.apache.org/spark/spark-4.0.0/spark-4.0.0-bin-hadoop3.tgz
+```
+
+Extraia os arquivos:
+
+```bash
+sudo tar -xzf spark-4.0.0-bin-hadoop3.tgz --strip-components=1
+```
+
+Remova o arquivo compactado:
+
+```bash
+sudo rm spark-4.0.0-bin-hadoop3.tgz
+```
+
+---
+
+### 16.3 — Configurar variáveis de ambiente
+
+Adicione as seguintes linhas ao final do arquivo `~/.bashrc`:
+
+```bash
+export SPARK_HOME=/opt/spark
+export PATH=$PATH:$SPARK_HOME/bin:$SPARK_HOME/sbin
+```
+
+Recarregue o shell:
+
+```bash
+source ~/.bashrc
+```
+
+---
+
+### 16.4 — Verificar instalação
+
+Verifique se o Java foi instalado corretamente:
+
+```bash
+java --version
+```
+
+Verifique a instalação do Spark:
+
+```bash
+spark-shell --version
+```
+
+Se o comando acima exibir a versão instalada do Apache Spark, a instalação foi concluída com sucesso. ✅
+
+---
+
+### 16.5 — Iniciar o Spark
+
+Para iniciar o shell interativo do Spark:
+
+```bash
+spark-shell
+```
+
+Caso deseje utilizar a API Python do Spark:
+
+```bash
+pyspark
+```
+
+Para sair do Spark, execute:
+
+```text
+:quit
+```
+
+Ou pressione:
+
+```text
+Ctrl + D
+```
+
+---
+
+## 🗄️ 17. Instalação do Oracle Instant Client
+
+O **Oracle Instant Client** fornece as bibliotecas necessárias para que aplicações possam se conectar a bancos de dados Oracle sem a necessidade de instalar o Oracle Database Client completo.
+
+Esta instalação utiliza o pacote **Basic Lite**, suficiente para a maioria das aplicações, reduzindo o espaço ocupado e simplificando a configuração do ambiente.
+
+---
+
+### 17.1 — Atualizar pacotes e instalar dependências
+
+Atualize os pacotes do sistema e instale as dependências necessárias:
+
+```bash
+sudo apt update && sudo apt upgrade -y
+
+sudo apt install -y \
+    libnsl-dev \
+    libaio1 \
+    unzip \
+    curl
+```
+
+---
+
+### 17.2 — Baixar e instalar o Oracle Instant Client
+
+Crie o diretório onde o Oracle Instant Client será instalado:
+
+```bash
+sudo mkdir -p /opt/oracle
+```
+
+Entre no diretório:
+
+```bash
+cd /opt/oracle
+```
+
+Baixe o pacote **Basic Lite** do Oracle Instant Client.
+
+> 🔸 **Dica:** Antes de realizar o download, verifique no site oficial qual é a versão mais recente do Oracle Instant Client.
+>
+> 👉 https://www.oracle.com/database/technologies/instant-client/downloads.html
+>
+> Basta substituir o número da versão na URL abaixo e ajustar o nome do arquivo conforme a versão escolhida.
+
+```bash
+curl -sSL https://download.oracle.com/otn_software/linux/instantclient/1925000/instantclient-basiclite-linux.x64-19.25.0.0.0dbru.zip -o instantclient.zip
+```
+
+Extraia os arquivos:
+
+```bash
+sudo unzip instantclient.zip
+```
+
+Remova o arquivo compactado:
+
+```bash
+rm instantclient.zip
+```
+
+Remova componentes que normalmente não são necessários para aplicações cliente:
+
+```bash
+cd instantclient*
+sudo rm -f *jdbc* *occi* *mysql* *jar uidrvci genezi adrci
+```
+
+---
+
+### 17.3 — Configurar variáveis de ambiente
+
+Adicione a seguinte linha ao final do arquivo `~/.bashrc`:
+
+```bash
+export LD_LIBRARY_PATH=/opt/oracle/instantclient_19_25:$LD_LIBRARY_PATH
+```
+
+> 🔸 **Importante:** Caso utilize uma versão diferente da `19.25`, ajuste o nome do diretório (`instantclient_19_25`) para o diretório correspondente à versão instalada.
+
+Recarregue o shell:
+
+```bash
+source ~/.bashrc
+```
+
+---
+
+### 17.4 — Verificar instalação
+
+Verifique se o diretório do Oracle Instant Client foi criado corretamente:
+
+```bash
+ls /opt/oracle
+```
+
+Verifique se a variável de ambiente foi carregada:
+
+```bash
+echo $LD_LIBRARY_PATH
+```
+
+Se o caminho do Oracle Instant Client aparecer na saída do comando, a instalação foi concluída com sucesso. ✅
